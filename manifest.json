@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Portal Metadata & API Capturer",
+  "version": "2.0",
+  "description": "Capture API metadata and UI data from web portals including Fortinet",
+  "permissions": [
+    "webRequest",
+    "webNavigation",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "ml-unified-collector.js",
+        "universal_field_extractor.js",
+        "vendor_field_map.json",
+        "vendor-map-loader.js",
+        "ml-config.js",
+        "ml-inference.js",
+        "model_data.json"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

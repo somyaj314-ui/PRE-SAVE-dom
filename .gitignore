@@ -1,0 +1,56 @@
+# Git helper files (don't push)
+GIT_PUSH_COMMANDS.md
+push_to_github.bat
+PUSH_COMMANDS.txt
+
+# Kiro/Claude IDE files (don't push)
+.claude/
+.kiro/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Chrome Extension
+*.crx
+*.pem
+
+# Personal data (captured from FortiGate)
+portal-capture-*.json
+labeled_portal_data.json
+synthetic_fortigate_data.json
+
+# Compiled
+*.exe
+dist/
+build/
+
+# Test files (optional - uncomment if you don't want to push)
+# test_*.html
+# test.md

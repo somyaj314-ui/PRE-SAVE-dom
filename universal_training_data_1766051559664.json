@@ -1,0 +1,4887 @@
+{
+  "version": "2.0-universal",
+  "stats": {
+    "total": 25,
+    "by_type": {
+      "policy": 4,
+      "admin_user": 3,
+      "dos_policy": 6,
+      "firewall_address": 3,
+      "vpn_ipsec_tunnel": 2,
+      "central_snat": 1,
+      "service": 2,
+      "network_interface": 4
+    }
+  },
+  "samples": [
+    {
+      "metadata": {
+        "timestamp": 1766051283398,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "rohit",
+          "source_interface": "port2  port3 a",
+          "destination_interface": "port2 a",
+          "source_address": "wildcard.dropbox.com  wildcard.google.com a",
+          "destination_address": "wildcard.google.com a",
+          "schedule": "always a",
+          "service": "AFS3  FTP a",
+          "action": "ACCEPT",
+          "security_profile": "default a",
+          "log_traffic": "All sessions",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "name": "test2",
+          "source_interface": "port2  port3 a",
+          "destination_interface": "port2  port1 a",
+          "source_address": "wildcard.dropbox.com  wildcard.google.com  gmail.com a",
+          "destination_address": "wildcard.google.com a",
+          "schedule": "always a",
+          "service": "AFS3  FTP a",
+          "action": "ACCEPT",
+          "security_profile": "default a",
+          "log_traffic": "All sessions",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "rohit",
+          "new": "test2"
+        },
+        {
+          "field": "destination_interface",
+          "old": "port2 a",
+          "new": "port2  port1 a"
+        },
+        {
+          "field": "source_address",
+          "old": "wildcard.dropbox.com  wildcard.google.com a",
+          "new": "wildcard.dropbox.com  wildcard.google.com  gmail.com a"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766051321965,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "somyajain",
+          "source_interface": "port1  port2 a",
+          "destination_interface": "port2 a",
+          "source_address": "all a",
+          "destination_address": "gmail.com a",
+          "schedule": "always a",
+          "service": "FTP  FTP_GET a",
+          "action": "DENY",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "name": "test1",
+          "source_interface": "port1  port2 a",
+          "destination_interface": "port2  port3 a",
+          "source_address": "login.microsoftonline.com a",
+          "destination_address": "gmail.com  wildcard.google.com a",
+          "schedule": "always a",
+          "service": "FTP  FTP_GET a",
+          "action": "ACCEPT",
+          "security_profile": "default a",
+          "log_traffic": "",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "somyajain",
+          "new": "test1"
+        },
+        {
+          "field": "destination_interface",
+          "old": "port2 a",
+          "new": "port2  port3 a"
+        },
+        {
+          "field": "source_address",
+          "old": "all a",
+          "new": "login.microsoftonline.com a"
+        },
+        {
+          "field": "destination_address",
+          "old": "gmail.com a",
+          "new": "gmail.com  wildcard.google.com a"
+        },
+        {
+          "field": "action",
+          "old": "DENY",
+          "new": "ACCEPT"
+        },
+        {
+          "field": "security_profile",
+          "new": "default a"
+        },
+        {
+          "field": "log_traffic",
+          "new": ""
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766051358968,
+        "vendor": "fortigate",
+        "object_type": "admin_user",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "username": "",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        },
+        "after": {
+          "username": "ritik",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "prof_admin",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        }
+      },
+      "changes": [
+        {
+          "field": "username",
+          "old": "",
+          "new": "ritik"
+        },
+        {
+          "field": "access_profile",
+          "old": "",
+          "new": "prof_admin"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766051401117,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "Somya",
+          "interface": "port1",
+          "source_address": "login.microsoftonline.comlogin.windows.net",
+          "destination_address": "SSLVPN_TUNNEL_ADDR1",
+          "service": "ALL_TCPFTPFTP_GETPOP3SSAMBA",
+          "log_traffic": true,
+          "action": false,
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "testdos1",
+          "interface": "port1",
+          "source_address": "login.microsoftonline.comlogin.windows.net",
+          "destination_address": "login.windows.netSSLVPN_TUNNEL_ADDR1",
+          "service": "ALL_TCPFTPHTTPHTTPS",
+          "log_traffic": true,
+          "action": false,
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "Somya",
+          "new": "testdos1"
+        },
+        {
+          "field": "destination_address",
+          "old": "SSLVPN_TUNNEL_ADDR1",
+          "new": "login.windows.netSSLVPN_TUNNEL_ADDR1"
+        },
+        {
+          "field": "service",
+          "old": "ALL_TCPFTPFTP_GETPOP3SSAMBA",
+          "new": "ALL_TCPFTPHTTPHTTPS"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766051448408,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "Shanaya",
+          "interface": "port2",
+          "source_address": "FIREWALL_AUTH_PORTAL_ADDRESSgmail.com",
+          "destination_address": "login.microsoftonline.comlogin.windows.net",
+          "service": "ALL_ICMP6ALL_UDP",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "testdos2",
+          "interface": "port2",
+          "source_address": "gmail.comlogin.microsoftonline.com",
+          "destination_address": "login.microsoftonline.comlogin.windows.net",
+          "service": "ALL_ICMP6ALL_UDP",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 4,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "Shanaya",
+          "new": "testdos2"
+        },
+        {
+          "field": "source_address",
+          "old": "FIREWALL_AUTH_PORTAL_ADDRESSgmail.com",
+          "new": "gmail.comlogin.microsoftonline.com"
+        },
+        {
+          "field": "threshold",
+          "old": 5000,
+          "new": 4
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766051474785,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "bhavya",
+          "interface": "port1",
+          "source_address": "login.microsoftonline.comlogin.windows.net",
+          "destination_address": "login.microsoft.comlogin.microsoftonline.com",
+          "service": "ALL_TCPALL_UDP",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "dos3",
+          "interface": "port1",
+          "source_address": "login.microsoftonline.comlogin.windows.netSSLVPN_TUNNEL_ADDR1",
+          "destination_address": "all",
+          "service": "ALL_TCPHTTPHTTPS",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "bhavya",
+          "new": "dos3"
+        },
+        {
+          "field": "source_address",
+          "old": "login.microsoftonline.comlogin.windows.net",
+          "new": "login.microsoftonline.comlogin.windows.netSSLVPN_TUNNEL_ADDR1"
+        },
+        {
+          "field": "destination_address",
+          "old": "login.microsoft.comlogin.microsoftonline.com",
+          "new": "all"
+        },
+        {
+          "field": "service",
+          "old": "ALL_TCPALL_UDP",
+          "new": "ALL_TCPHTTPHTTPS"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766051503869,
+        "vendor": "fortigate",
+        "object_type": "firewall_address",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "address_name": "",
+          "associated_interface": "any",
+          "address_type": "string:ipmask",
+          "subnet": "0.0.0.0 0.0.0.0",
+          "allow_routing": false,
+          "comments": ""
+        },
+        "after": {
+          "address_name": "addtestnew",
+          "associated_interface": "port3",
+          "address_type": "string:ipmask",
+          "subnet": "0.0.0.0 0.0.0.0",
+          "allow_routing": false,
+          "comments": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "address_name",
+          "old": "",
+          "new": "addtestnew"
+        },
+        {
+          "field": "associated_interface",
+          "old": "any",
+          "new": "port3"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766051507938,
+        "vendor": "fortigate",
+        "object_type": "firewall_address",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "address_name": "",
+          "associated_interface": "any",
+          "address_type": "string:ipmask",
+          "subnet": "0.0.0.0 0.0.0.0",
+          "allow_routing": false,
+          "comments": ""
+        },
+        "after": {
+          "address_name": "addtestnew",
+          "associated_interface": "port3",
+          "address_type": "string:ipmask",
+          "subnet": "0.0.0.0 0.0.0.0",
+          "allow_routing": false,
+          "comments": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "address_name",
+          "old": "",
+          "new": "addtestnew"
+        },
+        {
+          "field": "associated_interface",
+          "old": "any",
+          "new": "port3"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766051553427,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "",
+          "destination_interface": "",
+          "source_address": "",
+          "destination_address": "",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        },
+        "after": {
+          "source_interface": "port3",
+          "destination_interface": "port2",
+          "source_address": "FABRIC_DEVICEFIREWALL_AUTH_PORTAL_ADDRESS",
+          "destination_address": "FABRIC_DEVICEFIREWALL_AUTH_PORTAL_ADDRESS",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 17,
+          "nat_port": false,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "source_interface",
+          "old": "",
+          "new": "port3"
+        },
+        {
+          "field": "destination_interface",
+          "old": "",
+          "new": "port2"
+        },
+        {
+          "field": "source_address",
+          "old": "",
+          "new": "FABRIC_DEVICEFIREWALL_AUTH_PORTAL_ADDRESS"
+        },
+        {
+          "field": "destination_address",
+          "old": "",
+          "new": "FABRIC_DEVICEFIREWALL_AUTH_PORTAL_ADDRESS"
+        },
+        {
+          "field": "service",
+          "old": "any",
+          "new": false
+        },
+        {
+          "field": "service",
+          "old": 0,
+          "new": 17
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766126155322,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "rohit",
+          "source_interface": "port2  port3 a",
+          "destination_interface": "port2 a",
+          "source_address": "wildcard.dropbox.com  wildcard.google.com a",
+          "destination_address": "wildcard.google.com a",
+          "schedule": "always a",
+          "service": "AFS3  FTP a",
+          "action": "ACCEPT",
+          "security_profile": "default a",
+          "log_traffic": "All sessions",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "name": "test2",
+          "source_interface": "port2  port3 a",
+          "destination_interface": "port2  l2t.root a",
+          "source_address": "wildcard.dropbox.com  wildcard.google.com a",
+          "destination_address": "wildcard.google.com a",
+          "schedule": "always a",
+          "service": "AFS3  FTP  SAMBA a",
+          "action": "ACCEPT",
+          "security_profile": "default a",
+          "log_traffic": "All sessions",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "rohit",
+          "new": "test2"
+        },
+        {
+          "field": "destination_interface",
+          "old": "port2 a",
+          "new": "port2  l2t.root a"
+        },
+        {
+          "field": "service",
+          "old": "AFS3  FTP a",
+          "new": "AFS3  FTP  SAMBA a"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766126191226,
+        "vendor": "fortigate",
+        "object_type": "admin_user",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "username": "",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        },
+        "after": {
+          "username": "harshit.k",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "admin_no_access",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        }
+      },
+      "changes": [
+        {
+          "field": "username",
+          "old": "",
+          "new": "harshit.k"
+        },
+        {
+          "field": "access_profile",
+          "old": "",
+          "new": "admin_no_access"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766126316341,
+        "vendor": "fortigate",
+        "object_type": "vpn_ipsec_tunnel",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "tunnel_name": "",
+          "mode": false,
+          "interface": "",
+          "user_group": "",
+          "remote_id": "",
+          "local_gateway": ""
+        },
+        "after": {
+          "tunnel_name": "testipsec2",
+          "mode": "static",
+          "remote_gateway": "10.10.9.34",
+          "interface": "port1",
+          "auth_method": false,
+          "certificate": "Fortinet_SSL_ECDSA256",
+          "user_group": "",
+          "remote_id": "",
+          "local_gateway": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "tunnel_name",
+          "old": "",
+          "new": "testipsec2"
+        },
+        {
+          "field": "mode",
+          "old": false,
+          "new": "static"
+        },
+        {
+          "field": "interface",
+          "old": "",
+          "new": "port1"
+        },
+        {
+          "field": "remote_gateway",
+          "new": "10.10.9.34"
+        },
+        {
+          "field": "auth_method",
+          "new": false
+        },
+        {
+          "field": "certificate",
+          "new": "Fortinet_SSL_ECDSA256"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766126358734,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "",
+          "destination_interface": "",
+          "source_address": "",
+          "destination_address": "",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        },
+        "after": {
+          "source_interface": "port2                             port3",
+          "destination_interface": "port1                             port2",
+          "source_address": "gmail.comlogin.microsoft.com",
+          "destination_address": "login.microsoftonline.comlogin.windows.net",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 132,
+          "nat_port": false,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "source_interface",
+          "old": "",
+          "new": "port2                             port3"
+        },
+        {
+          "field": "destination_interface",
+          "old": "",
+          "new": "port1                             port2"
+        },
+        {
+          "field": "source_address",
+          "old": "",
+          "new": "gmail.comlogin.microsoft.com"
+        },
+        {
+          "field": "destination_address",
+          "old": "",
+          "new": "login.microsoftonline.comlogin.windows.net"
+        },
+        {
+          "field": "service",
+          "old": "any",
+          "new": false
+        },
+        {
+          "field": "service",
+          "old": 0,
+          "new": 132
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766126404118,
+        "vendor": "fortigate",
+        "object_type": "firewall_address",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "address_name": "",
+          "associated_interface": "any",
+          "address_type": "string:ipmask",
+          "subnet": "0.0.0.0 0.0.0.0",
+          "allow_routing": false,
+          "comments": ""
+        },
+        "after": {
+          "address_name": "fortitest_add",
+          "associated_interface": "port2",
+          "address_type": "string:ipmask",
+          "subnet": "10.10.43.56/32",
+          "allow_routing": true,
+          "comments": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "address_name",
+          "old": "",
+          "new": "fortitest_add"
+        },
+        {
+          "field": "associated_interface",
+          "old": "any",
+          "new": "port2"
+        },
+        {
+          "field": "subnet",
+          "old": "0.0.0.0 0.0.0.0",
+          "new": "10.10.43.56/32"
+        },
+        {
+          "field": "allow_routing",
+          "old": false,
+          "new": true
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766126485432,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "somyajain",
+          "source_interface": "port1  port2 a",
+          "destination_interface": "port2 a",
+          "source_address": "all a",
+          "destination_address": "gmail.com a",
+          "schedule": "always a",
+          "service": "FTP  FTP_GET a",
+          "action": "DENY",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "name": "test_55",
+          "source_interface": "port1  port2 a",
+          "destination_interface": "port2 a",
+          "source_address": "all a",
+          "destination_address": "gmail.com a",
+          "schedule": "always a",
+          "service": "FTP  FTP_GET a",
+          "action": "ACCEPT",
+          "security_profile": "default a",
+          "log_traffic": "",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "somyajain",
+          "new": "test_55"
+        },
+        {
+          "field": "action",
+          "old": "DENY",
+          "new": "ACCEPT"
+        },
+        {
+          "field": "security_profile",
+          "new": "default a"
+        },
+        {
+          "field": "log_traffic",
+          "new": ""
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766126531473,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "Somya",
+          "interface": "port1",
+          "source_address": "",
+          "destination_address": "",
+          "service": "ALL_TCPFTPFTP_GETPOP3SSAMBA",
+          "log_traffic": true,
+          "action": false,
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "testdos1",
+          "interface": "port1",
+          "source_address": "login.microsoftonline.comlogin.windows.net",
+          "destination_address": "FABRIC_DEVICESSLVPN_TUNNEL_ADDR1",
+          "service": "ALL_TCPFTPHTTPHTTPS",
+          "log_traffic": true,
+          "action": false,
+          "threshold": 7800,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "Somya",
+          "new": "testdos1"
+        },
+        {
+          "field": "source_address",
+          "old": "",
+          "new": "login.microsoftonline.comlogin.windows.net"
+        },
+        {
+          "field": "destination_address",
+          "old": "",
+          "new": "FABRIC_DEVICESSLVPN_TUNNEL_ADDR1"
+        },
+        {
+          "field": "service",
+          "old": "ALL_TCPFTPFTP_GETPOP3SSAMBA",
+          "new": "ALL_TCPFTPHTTPHTTPS"
+        },
+        {
+          "field": "threshold",
+          "old": 5000,
+          "new": 7800
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766126584266,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "Shanaya",
+          "interface": "port2",
+          "source_address": "FIREWALL_AUTH_PORTAL_ADDRESSgmail.com",
+          "destination_address": "login.microsoftonline.comlogin.windows.net",
+          "service": "ALL_ICMP6ALL_UDP",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "testdos2",
+          "interface": "port2",
+          "source_address": "FIREWALL_AUTH_PORTAL_ADDRESSgmail.com",
+          "destination_address": "login.microsoftonline.comlogin.windows.net",
+          "service": "ALL_ICMP6ALL_UDP",
+          "log_traffic": false,
+          "action": "disable",
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "Shanaya",
+          "new": "testdos2"
+        },
+        {
+          "field": "action",
+          "old": false,
+          "new": "disable"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766126621433,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "bhavya",
+          "interface": "port1",
+          "source_address": "login.microsoftonline.comlogin.windows.net",
+          "destination_address": "login.microsoft.comlogin.microsoftonline.com",
+          "service": "ALL_TCPALL_UDP",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "testdos3",
+          "interface": "port1",
+          "source_address": "login.microsoftonline.comlogin.windows.net",
+          "destination_address": "fortitest_addgmail.com",
+          "service": "ALL_TCPALL_UDP",
+          "log_traffic": false,
+          "action": "disable",
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "bhavya",
+          "new": "testdos3"
+        },
+        {
+          "field": "destination_address",
+          "old": "login.microsoft.comlogin.microsoftonline.com",
+          "new": "fortitest_addgmail.com"
+        },
+        {
+          "field": "action",
+          "old": false,
+          "new": "disable"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766126749267,
+        "vendor": "fortigate",
+        "object_type": "vpn_ipsec_tunnel",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "tunnel_name": "",
+          "mode": "static",
+          "remote_gateway": "",
+          "interface": "",
+          "auth_method": "psk",
+          "pre_shared_key": "",
+          "user_group": "",
+          "remote_id": "",
+          "local_gateway": ""
+        },
+        "after": {
+          "tunnel_name": "testipsec3",
+          "mode": false,
+          "interface": "port2",
+          "auth_method": false,
+          "certificate": "Fortinet_SSL",
+          "user_group": "",
+          "remote_id": "",
+          "local_gateway": "10.10.1.1",
+          "remote_gateway": "10.10.1.2/24"
+        }
+      },
+      "changes": [
+        {
+          "field": "tunnel_name",
+          "old": "",
+          "new": "testipsec3"
+        },
+        {
+          "field": "mode",
+          "old": "static",
+          "new": false
+        },
+        {
+          "field": "remote_gateway",
+          "old": ""
+        },
+        {
+          "field": "interface",
+          "old": "",
+          "new": "port2"
+        },
+        {
+          "field": "auth_method",
+          "old": "psk",
+          "new": false
+        },
+        {
+          "field": "pre_shared_key",
+          "old": ""
+        },
+        {
+          "field": "local_gateway",
+          "old": "",
+          "new": "10.10.1.1"
+        },
+        {
+          "field": "certificate",
+          "new": "Fortinet_SSL"
+        },
+        {
+          "field": "remote_gateway",
+          "new": "10.10.1.2/24"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766126794828,
+        "vendor": "fortigate",
+        "object_type": "admin_user",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "username": "",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        },
+        "after": {
+          "username": "bhavya.g",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "prof_admin",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        }
+      },
+      "changes": [
+        {
+          "field": "username",
+          "old": "",
+          "new": "bhavya.g"
+        },
+        {
+          "field": "access_profile",
+          "old": "",
+          "new": "prof_admin"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766138993033,
+        "vendor": "fortigate",
+        "object_type": "service",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "service_name": "vbnnnn",
+          "comments": "",
+          "category": "Uncategorized",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "10.10.10.67",
+          "port_range": "-"
+        },
+        "after": {
+          "service_name": "vbnnnn",
+          "comments": "",
+          "category": "File Access",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "10.10.10.67",
+          "port_range": "-"
+        }
+      },
+      "changes": [
+        {
+          "field": "category",
+          "old": "Uncategorized",
+          "new": "File Access"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766139339991,
+        "vendor": "fortigate",
+        "object_type": "service",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "service_name": "",
+          "comments": "",
+          "category": "Uncategorized",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "0.0.0.0",
+          "port_range": "-"
+        },
+        "after": {
+          "service_name": "newtestservice",
+          "comments": "",
+          "category": "Uncategorized",
+          "protocol": "string:ICMP"
+        }
+      },
+      "changes": [
+        {
+          "field": "service_name",
+          "old": "",
+          "new": "newtestservice"
+        },
+        {
+          "field": "protocol",
+          "old": "string:TCP/UDP/SCTP",
+          "new": "string:ICMP"
+        },
+        {
+          "field": "ip_range",
+          "old": "0.0.0.0"
+        },
+        {
+          "field": "port_range",
+          "old": "-"
+        },
+        {
+          "field": "port_range",
+          "old": "",
+          "new": "undefined-undefined"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766380519421,
+        "vendor": "fortigate",
+        "object_type": "network_interface",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "interface_name": "",
+          "description": "",
+          "interface_type": "VLAN",
+          "parent_interface": "",
+          "vlan_id": 0,
+          "vrf": 0,
+          "role": "string:lan",
+          "ip_address": "0.0.0.0/0.0.0.0",
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        },
+        "after": {
+          "interface_name": "fortinet",
+          "description": "",
+          "interface_type": "EMAC VLAN",
+          "parent_interface": "port2",
+          "vlan_id": 0,
+          "vrf": 1,
+          "role": "string:lan",
+          "ip_address": "10.10.10.9/36",
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        }
+      },
+      "changes": [
+        {
+          "field": "interface_name",
+          "old": "",
+          "new": "fortinet"
+        },
+        {
+          "field": "interface_type",
+          "old": "VLAN",
+          "new": "EMAC VLAN"
+        },
+        {
+          "field": "parent_interface",
+          "old": "",
+          "new": "port2"
+        },
+        {
+          "field": "vrf",
+          "old": 0,
+          "new": 1
+        },
+        {
+          "field": "ip_address",
+          "old": "0.0.0.0/0.0.0.0",
+          "new": "10.10.10.9/36"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766381167838,
+        "vendor": "fortigate",
+        "object_type": "network_interface",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "interface_name": "",
+          "description": "",
+          "interface_type": "VLAN",
+          "parent_interface": "",
+          "vlan_id": 0,
+          "vrf": 0,
+          "role": "string:lan",
+          "ip_address": "0.0.0.0/0.0.0.0",
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        },
+        "after": {
+          "interface_name": "newinf",
+          "description": "",
+          "interface_type": "Loopback Interface",
+          "vrf": 0,
+          "role": "string:wan",
+          "ip_address": "192.146.172.87/32",
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        }
+      },
+      "changes": [
+        {
+          "field": "interface_name",
+          "old": "",
+          "new": "newinf"
+        },
+        {
+          "field": "interface_type",
+          "old": "VLAN",
+          "new": "Loopback Interface"
+        },
+        {
+          "field": "parent_interface",
+          "old": ""
+        },
+        {
+          "field": "vlan_id",
+          "old": 0
+        },
+        {
+          "field": "role",
+          "old": "string:lan",
+          "new": "string:wan"
+        },
+        {
+          "field": "ip_address",
+          "old": "0.0.0.0/0.0.0.0",
+          "new": "192.146.172.87/32"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766385619522,
+        "vendor": "fortigate",
+        "object_type": "admin_user",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "username": "",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        },
+        "after": {
+          "username": "aman.s",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "admin_no_access",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        }
+      },
+      "changes": [
+        {
+          "field": "username",
+          "old": "",
+          "new": "aman.s"
+        },
+        {
+          "field": "access_profile",
+          "old": "",
+          "new": "admin_no_access"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766385674361,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "policy_id": 0,
+          "name": "",
+          "source_interface": "a",
+          "destination_interface": "a",
+          "source_address": "a",
+          "destination_address": "a",
+          "schedule": "always a",
+          "action": "ACCEPT",
+          "security_profile": "default a",
+          "log_traffic": "Security events",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "policy_id": 0,
+          "name": "test 11",
+          "source_interface": "port1  port2 a",
+          "destination_interface": "testipsec3  testipsec2 a",
+          "source_address": "login.microsoft.com  login.windows.net a",
+          "destination_address": "login.microsoft.com a",
+          "schedule": "always a",
+          "service": "FTP_PUT  FTP_GET a",
+          "action": "ACCEPT",
+          "security_profile": "default a",
+          "log_traffic": "All sessions",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "",
+          "new": "test 11"
+        },
+        {
+          "field": "source_interface",
+          "old": "a",
+          "new": "port1  port2 a"
+        },
+        {
+          "field": "destination_interface",
+          "old": "a",
+          "new": "testipsec3  testipsec2 a"
+        },
+        {
+          "field": "source_address",
+          "old": "a",
+          "new": "login.microsoft.com  login.windows.net a"
+        },
+        {
+          "field": "destination_address",
+          "old": "a",
+          "new": "login.microsoft.com a"
+        },
+        {
+          "field": "log_traffic",
+          "old": "Security events",
+          "new": "All sessions"
+        },
+        {
+          "field": "service",
+          "new": "FTP_PUT  FTP_GET a"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766385690827,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "test_55",
+          "source_interface": "port1  port2 a",
+          "destination_interface": "port2 a",
+          "source_address": "all a",
+          "destination_address": "gmail.com a",
+          "schedule": "always a",
+          "service": "FTP  FTP_GET a",
+          "action": "DENY",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "name": "test_55",
+          "source_interface": "port1  port2 a",
+          "destination_interface": "port2 a",
+          "source_address": "all a",
+          "destination_address": "gmail.com a",
+          "schedule": "always a",
+          "service": "FTP  FTP_GET a",
+          "action": "ACCEPT",
+          "security_profile": "default a",
+          "log_traffic": "",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "action",
+          "old": "DENY",
+          "new": "ACCEPT"
+        },
+        {
+          "field": "security_profile",
+          "new": "default a"
+        },
+        {
+          "field": "log_traffic",
+          "new": ""
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766385709444,
+        "vendor": "fortigate",
+        "object_type": "firewall_address",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "address_name": "fortitest_add",
+          "associated_interface": "",
+          "address_type": "string:ipmask",
+          "subnet": "10.10.43.56 255.255.255.255",
+          "allow_routing": true,
+          "comments": ""
+        },
+        "after": {
+          "address_name": "fortitest_add2",
+          "associated_interface": "port2",
+          "address_type": "string:ipmask",
+          "subnet": "10.10.43.56 255.255.255.255",
+          "allow_routing": true,
+          "comments": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "address_name",
+          "old": "fortitest_add",
+          "new": "fortitest_add2"
+        },
+        {
+          "field": "associated_interface",
+          "old": "",
+          "new": "port2"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766385730060,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "port2                             port3",
+          "destination_interface": "port1                             port2",
+          "source_address": "gmail.comlogin.microsoft.com",
+          "destination_address": "login.microsoftonline.comlogin.windows.net",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 132,
+          "nat_port": false,
+          "status": true
+        },
+        "after": {
+          "source_interface": "port2                             port3",
+          "destination_interface": "port1                             port2",
+          "source_address": "gmail.comlogin.microsoft.com",
+          "destination_address": "login.microsoftonline.comlogin.windows.net",
+          "action": false,
+          "service": 6,
+          "nat_port": false,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "action",
+          "old": true,
+          "new": false
+        },
+        {
+          "field": "snat_type",
+          "old": "nat"
+        },
+        {
+          "field": "translated_source",
+          "old": "Use Outgoing Interface Address"
+        },
+        {
+          "field": "service",
+          "old": 132,
+          "new": 6
+        },
+        {
+          "field": "action",
+          "old": true
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766392784122,
+        "vendor": "fortigate",
+        "object_type": "admin_user",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "username": "bhavya.g",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "super_admin",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        },
+        "after": {
+          "username": "bhavya",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "admin_no_access",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        }
+      },
+      "changes": [
+        {
+          "field": "username",
+          "old": "bhavya.g",
+          "new": "bhavya"
+        },
+        {
+          "field": "access_profile",
+          "old": "super_admin",
+          "new": "admin_no_access"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766392889963,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "port2                             port3",
+          "destination_interface": "port1                             port2",
+          "source_address": "gmail.comlogin.microsoft.com",
+          "destination_address": "login.microsoftonline.comlogin.windows.net",
+          "action": false,
+          "service": 6,
+          "nat_port": false,
+          "status": true
+        },
+        "after": {
+          "source_interface": "port2                             port3",
+          "destination_interface": "port1                             port2",
+          "source_address": "gmail.comlogin.microsoft.com",
+          "destination_address": "login.microsoftonline.comlogin.windows.net",
+          "action": false,
+          "service": 132,
+          "nat_port": false,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "service",
+          "old": 6,
+          "new": 132
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766392909836,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "testdos2",
+          "interface": "port2",
+          "source_address": "FIREWALL_AUTH_PORTAL_ADDRESSgmail.com",
+          "destination_address": "login.microsoftonline.comlogin.windows.net",
+          "service": "ALL_ICMP6ALL_UDP",
+          "log_traffic": false,
+          "action": "disable",
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "testdos2",
+          "interface": "port2",
+          "source_address": "FIREWALL_AUTH_PORTAL_ADDRESSgmail.com",
+          "destination_address": "fortitest_add2login.microsoftonline.com",
+          "service": "ALL_ICMP6ALL_UDP",
+          "log_traffic": false,
+          "action": "disable",
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "destination_address",
+          "old": "login.microsoftonline.comlogin.windows.net",
+          "new": "fortitest_add2login.microsoftonline.com"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766392937764,
+        "vendor": "fortigate",
+        "object_type": "firewall_address",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "address_name": "fortitest_add2",
+          "associated_interface": "",
+          "address_type": "string:ipmask",
+          "subnet": "10.10.43.56 255.255.255.255",
+          "allow_routing": true,
+          "comments": ""
+        },
+        "after": {
+          "address_name": "fortitest_add",
+          "associated_interface": "port2",
+          "address_type": "string:ipmask",
+          "subnet": "10.10.43.56 255.255.255.255",
+          "allow_routing": true,
+          "comments": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "address_name",
+          "old": "fortitest_add2",
+          "new": "fortitest_add"
+        },
+        {
+          "field": "associated_interface",
+          "old": "",
+          "new": "port2"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766392955750,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "test 11",
+          "source_interface": "port1  port2 a",
+          "destination_interface": "testipsec3  testipsec2 a",
+          "source_address": "login.microsoft.com  login.windows.net a",
+          "destination_address": "login.microsoft.com a",
+          "schedule": "always a",
+          "service": "FTP_PUT  FTP_GET a",
+          "action": "ACCEPT",
+          "security_profile": "default a",
+          "log_traffic": "All sessions",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "name": "test 11",
+          "source_interface": "port1  port2 a",
+          "destination_interface": "testipsec3  testipsec2 a",
+          "source_address": "login.microsoft.com  login.windows.net a",
+          "destination_address": "login.microsoft.com a",
+          "schedule": "always a",
+          "service": "FTP_PUT  FTP_GET a",
+          "action": "DENY",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "action",
+          "old": "ACCEPT",
+          "new": "DENY"
+        },
+        {
+          "field": "security_profile",
+          "old": "default a"
+        },
+        {
+          "field": "log_traffic",
+          "old": ""
+        },
+        {
+          "field": "log_traffic",
+          "old": "All sessions"
+        },
+        {
+          "field": "log_at_session_start",
+          "old": ""
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766393000973,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "",
+          "destination_interface": "",
+          "source_address": "",
+          "destination_address": "",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        },
+        "after": {
+          "source_interface": "port2                             port3",
+          "destination_interface": "port3",
+          "source_address": "fortitest_addlogin.microsoft.com",
+          "destination_address": "fortitest_addlogin.microsoftonline.com",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "source_interface",
+          "old": "",
+          "new": "port2                             port3"
+        },
+        {
+          "field": "destination_interface",
+          "old": "",
+          "new": "port3"
+        },
+        {
+          "field": "source_address",
+          "old": "",
+          "new": "fortitest_addlogin.microsoft.com"
+        },
+        {
+          "field": "destination_address",
+          "old": "",
+          "new": "fortitest_addlogin.microsoftonline.com"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766394520086,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "",
+          "interface": "",
+          "source_address": "",
+          "destination_address": "",
+          "service": "",
+          "log_traffic": false,
+          "action": "disable",
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "testdos6",
+          "interface": "port2",
+          "source_address": "fortitest_addgmail.com",
+          "destination_address": "login.microsoft.comlogin.microsoftonline.com",
+          "service": "HTTPHTTPS",
+          "log_traffic": true,
+          "action": false,
+          "threshold": 5005,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "",
+          "new": "testdos6"
+        },
+        {
+          "field": "interface",
+          "old": "",
+          "new": "port2"
+        },
+        {
+          "field": "source_address",
+          "old": "",
+          "new": "fortitest_addgmail.com"
+        },
+        {
+          "field": "destination_address",
+          "old": "",
+          "new": "login.microsoft.comlogin.microsoftonline.com"
+        },
+        {
+          "field": "service",
+          "old": "",
+          "new": "HTTPHTTPS"
+        },
+        {
+          "field": "log_traffic",
+          "old": false,
+          "new": true
+        },
+        {
+          "field": "action",
+          "old": "disable",
+          "new": false
+        },
+        {
+          "field": "threshold",
+          "old": 5000,
+          "new": 5005
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766394557742,
+        "vendor": "fortigate",
+        "object_type": "network_interface",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "description": "",
+          "vrf": 0,
+          "role": "string:undefined",
+          "ip_address": "10.255.1.1/255.255.255.0",
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        },
+        "after": {
+          "description": "",
+          "vrf": 0,
+          "role": "string:undefined",
+          "gateway": true,
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        }
+      },
+      "changes": [
+        {
+          "field": "ip_address",
+          "old": "10.255.1.1/255.255.255.0"
+        },
+        {
+          "field": "gateway",
+          "new": true
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766394591398,
+        "vendor": "fortigate",
+        "object_type": "network_interface",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "description": "",
+          "vrf": 0,
+          "role": "string:undefined",
+          "gateway": true,
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        },
+        "after": {
+          "description": "",
+          "vrf": 0,
+          "role": "string:undefined",
+          "gateway": true,
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        }
+      },
+      "changes": []
+    },
+    {
+      "metadata": {
+        "timestamp": 1766394623543,
+        "vendor": "fortigate",
+        "object_type": "network_interface",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "description": "",
+          "vrf": 0,
+          "role": "string:undefined",
+          "gateway": true,
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        },
+        "after": {
+          "description": "",
+          "vrf": 0,
+          "role": "string:undefined",
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        }
+      },
+      "changes": [
+        {
+          "field": "gateway",
+          "old": true
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766394656990,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "port3",
+          "destination_interface": "port3",
+          "source_address": "10.10.10.14",
+          "destination_address": "FIREWALL_AUTH_PORTAL_ADDRESS",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        },
+        "after": {
+          "source_interface": "port3",
+          "destination_interface": "port3",
+          "source_address": "10.10.10.14login.microsoft.comlogin.microsoftonline.com",
+          "destination_address": "FIREWALL_AUTH_PORTAL_ADDRESS",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "source_address",
+          "old": "10.10.10.14",
+          "new": "10.10.10.14login.microsoft.comlogin.microsoftonline.com"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766394682175,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "port3",
+          "destination_interface": "port1",
+          "source_address": "FABRIC_DEVICE",
+          "destination_address": "fortitest_add",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        },
+        "after": {
+          "source_interface": "port1                             port2                             port3",
+          "destination_interface": "port1",
+          "source_address": "FABRIC_DEVICE",
+          "destination_address": "fortitest_addlogin.microsoftonline.comlogin.windows.net",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "source_interface",
+          "old": "port3",
+          "new": "port1                             port2                             port3"
+        },
+        {
+          "field": "destination_address",
+          "old": "fortitest_add",
+          "new": "fortitest_addlogin.microsoftonline.comlogin.windows.net"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766394713041,
+        "vendor": "fortigate",
+        "object_type": "admin_user",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "username": "bhavya",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "admin_no_access",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        },
+        "after": {
+          "username": "bhavya.sh",
+          "admin_type": false,
+          "comments": "",
+          "access_profile": "super_admin_readonly",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        }
+      },
+      "changes": [
+        {
+          "field": "username",
+          "old": "bhavya",
+          "new": "bhavya.sh"
+        },
+        {
+          "field": "admin_type",
+          "old": "local",
+          "new": false
+        },
+        {
+          "field": "access_profile",
+          "old": "admin_no_access",
+          "new": "super_admin_readonly"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766394744072,
+        "vendor": "fortigate",
+        "object_type": "admin_user",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "username": "pratik.j",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "prof_admin",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        },
+        "after": {
+          "username": "pratik.shah",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "admin_no_access",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": true,
+          "guest_auth": false
+        }
+      },
+      "changes": [
+        {
+          "field": "username",
+          "old": "pratik.j",
+          "new": "pratik.shah"
+        },
+        {
+          "field": "access_profile",
+          "old": "prof_admin",
+          "new": "admin_no_access"
+        },
+        {
+          "field": "trusted_host",
+          "old": false,
+          "new": true
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766394782538,
+        "vendor": "fortigate",
+        "object_type": "admin_user",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "username": "bhavya",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "admin_no_access",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        },
+        "after": {
+          "username": "bhavya.tyagi",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "super_admin_readonly",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        }
+      },
+      "changes": [
+        {
+          "field": "username",
+          "old": "bhavya",
+          "new": "bhavya.tyagi"
+        },
+        {
+          "field": "access_profile",
+          "old": "admin_no_access",
+          "new": "super_admin_readonly"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766396626134,
+        "vendor": "fortigate",
+        "object_type": "vpn_ipsec_tunnel",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "tunnel_name": "testipsec4",
+          "tunnel_type": "string:static",
+          "remote_gateway": "10.10.36.47",
+          "interface": "port3",
+          "nat_traversal": "enable",
+          "certificate": "Fortinet_SSL_DSA1024Fortinet_SSL_ECDSA521",
+          "auth_mode": false,
+          "peer_id": "",
+          "ike_enc_algo": "string:des",
+          "ike_auth_algo": "string:md5",
+          "dh_group": false,
+          "auth_user": "",
+          "phase2_name": "",
+          "replay": false,
+          "pfs": false,
+          "phase2_protocol": "",
+          "keylife_seconds": ""
+        },
+        "after": {
+          "tunnel_name": "testipsec4",
+          "tunnel_type": "string:static",
+          "remote_gateway": "10.10.36.47",
+          "interface": "port1",
+          "nat_traversal": "enable",
+          "certificate": "Fortinet_SSL_DSA1024Fortinet_SSL_RSA1024",
+          "auth_mode": false,
+          "peer_id": "",
+          "ike_enc_algo": "string:des",
+          "ike_auth_algo": "string:md5",
+          "dh_group": false,
+          "auth_user": "",
+          "phase2_name": "",
+          "replay": false,
+          "pfs": false,
+          "phase2_protocol": "",
+          "keylife_seconds": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "interface",
+          "old": "port3",
+          "new": "port1"
+        },
+        {
+          "field": "certificate",
+          "old": "Fortinet_SSL_DSA1024Fortinet_SSL_ECDSA521",
+          "new": "Fortinet_SSL_DSA1024Fortinet_SSL_RSA1024"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766400321648,
+        "vendor": "fortigate",
+        "object_type": "vpn_ipsec_tunnel",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "tunnel_name": "testingipsec",
+          "tunnel_type": "string:static",
+          "remote_gateway": "10.10.36.89",
+          "interface": "port1",
+          "nat_traversal": "enable",
+          "certificate": "Fortinet_SSL_ECDSA256",
+          "auth_mode": false,
+          "peer_id": "",
+          "ike_enc_algo": "string:des",
+          "ike_auth_algo": "string:md5",
+          "dh_group": false,
+          "auth_user": "",
+          "phase2_name": "",
+          "replay": false,
+          "pfs": false,
+          "phase2_protocol": "",
+          "keylife_seconds": ""
+        },
+        "after": {
+          "tunnel_name": "testingipsec",
+          "tunnel_type": "string:static",
+          "remote_gateway": "10.10.36.89",
+          "interface": "testipsec3",
+          "nat_traversal": "enable",
+          "certificate": "Fortinet_SSL_ECDSA256Fortinet_SSL_ECDSA521",
+          "auth_mode": false,
+          "peer_id": "",
+          "ike_enc_algo": "string:des",
+          "ike_auth_algo": "string:md5",
+          "dh_group": false,
+          "auth_user": "",
+          "phase2_name": "testingipsec",
+          "replay": true,
+          "pfs": true,
+          "phase2_protocol": 0,
+          "keylife_seconds": 43200
+        }
+      },
+      "changes": [
+        {
+          "field": "interface",
+          "old": "port1",
+          "new": "testipsec3"
+        },
+        {
+          "field": "certificate",
+          "old": "Fortinet_SSL_ECDSA256",
+          "new": "Fortinet_SSL_ECDSA256Fortinet_SSL_ECDSA521"
+        },
+        {
+          "field": "phase2_name",
+          "old": "",
+          "new": "testingipsec"
+        },
+        {
+          "field": "replay",
+          "old": false,
+          "new": true
+        },
+        {
+          "field": "pfs",
+          "old": false,
+          "new": true
+        },
+        {
+          "field": "phase2_protocol",
+          "old": "",
+          "new": 0
+        },
+        {
+          "field": "keylife_seconds",
+          "old": "",
+          "new": 43200
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766400483529,
+        "vendor": "fortigate",
+        "object_type": "vpn_ipsec_tunnel",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "tunnel_name": "",
+          "vpn_template_type": "site2site",
+          "hub_spoke_role": false,
+          "nat_type": "none",
+          "peer_vendor": "fgt",
+          "dialup_client_type": false,
+          "dialup_client_name": false,
+          "tunnel_type": "static",
+          "remote_gateway": "",
+          "interface": "",
+          "auth_method": "psk",
+          "auth_user_group": "",
+          "peer_id": "",
+          "protected_dst_interface": "",
+          "protected_subnet": "",
+          "internet_access_type": "none"
+        },
+        "after": {
+          "tunnel_name": "newtest",
+          "vpn_template_type": "site2site",
+          "hub_spoke_role": false,
+          "nat_type": "none",
+          "peer_vendor": "fgt",
+          "dialup_client_type": false,
+          "dialup_client_name": false,
+          "tunnel_type": "static",
+          "remote_gateway": "192.134.172.45",
+          "interface": "port1",
+          "auth_method": false,
+          "certificate": "Fortinet_GUI_Server",
+          "auth_user_group": "",
+          "peer_id": "",
+          "protected_dst_interface": "port3",
+          "protected_subnet": "192.132.145.24/32",
+          "internet_access_type": "none"
+        }
+      },
+      "changes": [
+        {
+          "field": "tunnel_name",
+          "old": "",
+          "new": "newtest"
+        },
+        {
+          "field": "remote_gateway",
+          "old": "",
+          "new": "192.134.172.45"
+        },
+        {
+          "field": "interface",
+          "old": "",
+          "new": "port1"
+        },
+        {
+          "field": "auth_method",
+          "old": "psk",
+          "new": false
+        },
+        {
+          "field": "protected_dst_interface",
+          "old": "",
+          "new": "port3"
+        },
+        {
+          "field": "protected_subnet",
+          "old": "",
+          "new": "192.132.145.24/32"
+        },
+        {
+          "field": "certificate",
+          "new": "Fortinet_GUI_Server"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766400321648,
+        "vendor": "fortigate",
+        "object_type": "vpn_ipsec_tunnel",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "tunnel_name": "testingipsec",
+          "tunnel_type": "string:static",
+          "remote_gateway": "10.10.36.89",
+          "interface": "port1",
+          "nat_traversal": "enable",
+          "certificate": "Fortinet_SSL_ECDSA256",
+          "auth_mode": false,
+          "peer_id": "",
+          "ike_enc_algo": "string:des",
+          "ike_auth_algo": "string:md5",
+          "dh_group": false,
+          "auth_user": "",
+          "phase2_name": "",
+          "replay": false,
+          "pfs": false,
+          "phase2_protocol": "",
+          "keylife_seconds": ""
+        },
+        "after": {
+          "tunnel_name": "testingipsec",
+          "tunnel_type": "string:static",
+          "remote_gateway": "10.10.36.89",
+          "interface": "testipsec3",
+          "nat_traversal": "enable",
+          "certificate": "Fortinet_SSL_ECDSA256Fortinet_SSL_ECDSA521",
+          "auth_mode": false,
+          "peer_id": "",
+          "ike_enc_algo": "string:des",
+          "ike_auth_algo": "string:md5",
+          "dh_group": false,
+          "auth_user": "",
+          "phase2_name": "testingipsec",
+          "replay": true,
+          "pfs": true,
+          "phase2_protocol": 0,
+          "keylife_seconds": 43200
+        }
+      },
+      "changes": [
+        {
+          "field": "interface",
+          "old": "port1",
+          "new": "testipsec3"
+        },
+        {
+          "field": "certificate",
+          "old": "Fortinet_SSL_ECDSA256",
+          "new": "Fortinet_SSL_ECDSA256Fortinet_SSL_ECDSA521"
+        },
+        {
+          "field": "phase2_name",
+          "old": "",
+          "new": "testingipsec"
+        },
+        {
+          "field": "replay",
+          "old": false,
+          "new": true
+        },
+        {
+          "field": "pfs",
+          "old": false,
+          "new": true
+        },
+        {
+          "field": "phase2_protocol",
+          "old": "",
+          "new": 0
+        },
+        {
+          "field": "keylife_seconds",
+          "old": "",
+          "new": 43200
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766400483529,
+        "vendor": "fortigate",
+        "object_type": "vpn_ipsec_tunnel",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "tunnel_name": "",
+          "vpn_template_type": "site2site",
+          "hub_spoke_role": false,
+          "nat_type": "none",
+          "peer_vendor": "fgt",
+          "dialup_client_type": false,
+          "dialup_client_name": false,
+          "tunnel_type": "static",
+          "remote_gateway": "",
+          "interface": "",
+          "auth_method": "psk",
+          "auth_user_group": "",
+          "peer_id": "",
+          "protected_dst_interface": "",
+          "protected_subnet": "",
+          "internet_access_type": "none"
+        },
+        "after": {
+          "tunnel_name": "newtest",
+          "vpn_template_type": "site2site",
+          "hub_spoke_role": false,
+          "nat_type": "none",
+          "peer_vendor": "fgt",
+          "dialup_client_type": false,
+          "dialup_client_name": false,
+          "tunnel_type": "static",
+          "remote_gateway": "192.134.172.45",
+          "interface": "port1",
+          "auth_method": false,
+          "certificate": "Fortinet_GUI_Server",
+          "auth_user_group": "",
+          "peer_id": "",
+          "protected_dst_interface": "port3",
+          "protected_subnet": "192.132.145.24/32",
+          "internet_access_type": "none"
+        }
+      },
+      "changes": [
+        {
+          "field": "tunnel_name",
+          "old": "",
+          "new": "newtest"
+        },
+        {
+          "field": "remote_gateway",
+          "old": "",
+          "new": "192.134.172.45"
+        },
+        {
+          "field": "interface",
+          "old": "",
+          "new": "port1"
+        },
+        {
+          "field": "auth_method",
+          "old": "psk",
+          "new": false
+        },
+        {
+          "field": "protected_dst_interface",
+          "old": "",
+          "new": "port3"
+        },
+        {
+          "field": "protected_subnet",
+          "old": "",
+          "new": "192.132.145.24/32"
+        },
+        {
+          "field": "certificate",
+          "new": "Fortinet_GUI_Server"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766400811133,
+        "vendor": "fortigate",
+        "object_type": "service",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "service_name": "",
+          "comments": "",
+          "category": "Uncategorized",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "0.0.0.0",
+          "port_range": "-"
+        },
+        "after": {
+          "service_name": "testneww",
+          "comments": "",
+          "category": "File Access",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "10.10.37.87",
+          "port_range": "-"
+        }
+      },
+      "changes": [
+        {
+          "field": "service_name",
+          "old": "",
+          "new": "testneww"
+        },
+        {
+          "field": "category",
+          "old": "Uncategorized",
+          "new": "File Access"
+        },
+        {
+          "field": "ip_range",
+          "old": "0.0.0.0",
+          "new": "10.10.37.87"
+        },
+        {
+          "field": "port_range",
+          "old": "",
+          "new": "1-3"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766400849494,
+        "vendor": "fortigate",
+        "object_type": "service",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "service_name": "",
+          "comments": "",
+          "category": "Uncategorized",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "0.0.0.0",
+          "port_range": "-"
+        },
+        "after": {
+          "service_name": "testservice2",
+          "comments": "",
+          "category": "Network Services",
+          "protocol": "string:ICMP"
+        }
+      },
+      "changes": [
+        {
+          "field": "service_name",
+          "old": "",
+          "new": "testservice2"
+        },
+        {
+          "field": "category",
+          "old": "Uncategorized",
+          "new": "Network Services"
+        },
+        {
+          "field": "protocol",
+          "old": "string:TCP/UDP/SCTP",
+          "new": "string:ICMP"
+        },
+        {
+          "field": "ip_range",
+          "old": "0.0.0.0"
+        },
+        {
+          "field": "port_range",
+          "old": "-"
+        },
+        {
+          "field": "port_range",
+          "old": "",
+          "new": "undefined-undefined"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766400891543,
+        "vendor": "fortigate",
+        "object_type": "service",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "service_name": "vbnnnn",
+          "comments": "",
+          "category": "File Access",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "10.10.10.67",
+          "port_range": "-"
+        },
+        "after": {
+          "service_name": "testservice3",
+          "comments": "",
+          "category": "Remote Access",
+          "protocol": "string:IP"
+        }
+      },
+      "changes": [
+        {
+          "field": "service_name",
+          "old": "vbnnnn",
+          "new": "testservice3"
+        },
+        {
+          "field": "category",
+          "old": "File Access",
+          "new": "Remote Access"
+        },
+        {
+          "field": "protocol",
+          "old": "string:TCP/UDP/SCTP",
+          "new": "string:IP"
+        },
+        {
+          "field": "ip_range",
+          "old": "10.10.10.67"
+        },
+        {
+          "field": "port_range",
+          "old": "-"
+        },
+        {
+          "field": "port_range",
+          "old": "1-2",
+          "new": "undefined-undefined"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766400924880,
+        "vendor": "fortigate",
+        "object_type": "service",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "service_name": "SQUID",
+          "comments": "",
+          "category": "Tunneling",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "0.0.0.0",
+          "port_range": "-"
+        },
+        "after": {
+          "service_name": "SQUID",
+          "comments": "",
+          "category": "Tunneling",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "0.0.0.0",
+          "port_range": "-"
+        }
+      },
+      "changes": [
+        {
+          "field": "port_range",
+          "old": "3128",
+          "new": "3126"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766400969697,
+        "vendor": "fortigate",
+        "object_type": "service",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "service_name": "testneww",
+          "comments": "",
+          "category": "File Access",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "10.10.37.87",
+          "port_range": "-"
+        },
+        "after": {
+          "service_name": "testneww",
+          "comments": "",
+          "category": "File Access",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "10.10.37.87",
+          "port_range": "-"
+        }
+      },
+      "changes": [
+        {
+          "field": "port_range",
+          "old": "1-3",
+          "new": "678-1000"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766401041850,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "",
+          "interface": "",
+          "source_address": "",
+          "destination_address": "",
+          "service": "",
+          "log_traffic": false,
+          "action": "disable",
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "dosnew",
+          "interface": "port3",
+          "source_address": "gmail.comlogin.microsoft.com",
+          "destination_address": "gmail.comlogin.microsoft.com",
+          "service": "HTTPHTTPS",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5678,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "",
+          "new": "dosnew"
+        },
+        {
+          "field": "interface",
+          "old": "",
+          "new": "port3"
+        },
+        {
+          "field": "source_address",
+          "old": "",
+          "new": "gmail.comlogin.microsoft.com"
+        },
+        {
+          "field": "destination_address",
+          "old": "",
+          "new": "gmail.comlogin.microsoft.com"
+        },
+        {
+          "field": "service",
+          "old": "",
+          "new": "HTTPHTTPS"
+        },
+        {
+          "field": "action",
+          "old": "disable",
+          "new": false
+        },
+        {
+          "field": "threshold",
+          "old": 5000,
+          "new": 5678
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766401097475,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "",
+          "interface": "",
+          "source_address": "",
+          "destination_address": "",
+          "service": "",
+          "log_traffic": false,
+          "action": "disable",
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "dosnew2",
+          "interface": "testipsec3",
+          "source_address": "gmail.comlogin.microsoft.comnewtest_local_subnet_1newtest_remote_subnet_1SSLVPN_TUNNEL_ADDR1testingipsec_local_subnet_1testingipsec_remote_subnet_1",
+          "destination_address": "FIREWALL_AUTH_PORTAL_ADDRESSfortitest_addgmail.comlogin.microsoft.comnewtest_remote_subnet_1testingipsec_local_subnet_1testingipsec_remote_subnet_1testipsec2_local_subnet_1",
+          "service": "AFS3FTPFTP_GETFTP_PUTNFSSAMBA",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "",
+          "new": "dosnew2"
+        },
+        {
+          "field": "interface",
+          "old": "",
+          "new": "testipsec3"
+        },
+        {
+          "field": "source_address",
+          "old": "",
+          "new": "gmail.comlogin.microsoft.comnewtest_local_subnet_1newtest_remote_subnet_1SSLVPN_TUNNEL_ADDR1testingipsec_local_subnet_1testingipsec_remote_subnet_1"
+        },
+        {
+          "field": "destination_address",
+          "old": "",
+          "new": "FIREWALL_AUTH_PORTAL_ADDRESSfortitest_addgmail.comlogin.microsoft.comnewtest_remote_subnet_1testingipsec_local_subnet_1testingipsec_remote_subnet_1testipsec2_local_subnet_1"
+        },
+        {
+          "field": "service",
+          "old": "",
+          "new": "AFS3FTPFTP_GETFTP_PUTNFSSAMBA"
+        },
+        {
+          "field": "action",
+          "old": "disable",
+          "new": false
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766401146219,
+        "vendor": "fortigate",
+        "object_type": "network_interface",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "interface_name": "",
+          "description": "",
+          "interface_type": "VLAN",
+          "parent_interface": "",
+          "vlan_id": 0,
+          "vrf": 0,
+          "role": "string:lan",
+          "ip_address": "0.0.0.0/0.0.0.0",
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        },
+        "after": {
+          "interface_name": "newint1",
+          "description": "",
+          "interface_type": "Loopback Interface",
+          "vrf": 0,
+          "role": "string:lan",
+          "ip_address": "10.10.45.64/32",
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        }
+      },
+      "changes": [
+        {
+          "field": "interface_name",
+          "old": "",
+          "new": "newint1"
+        },
+        {
+          "field": "interface_type",
+          "old": "VLAN",
+          "new": "Loopback Interface"
+        },
+        {
+          "field": "parent_interface",
+          "old": ""
+        },
+        {
+          "field": "vlan_id",
+          "old": 0
+        },
+        {
+          "field": "ip_address",
+          "old": "0.0.0.0/0.0.0.0",
+          "new": "10.10.45.64/32"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766401226012,
+        "vendor": "fortigate",
+        "object_type": "network_interface",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "description": "",
+          "vrf": 0,
+          "role": "string:wan",
+          "gateway": true,
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        },
+        "after": {
+          "description": "",
+          "vrf": 0,
+          "role": "string:wan",
+          "ip_address": "192.168.157.128/255.255.255.0",
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        }
+      },
+      "changes": [
+        {
+          "field": "gateway",
+          "old": true
+        },
+        {
+          "field": "ip_address",
+          "new": "192.168.157.128/255.255.255.0"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766406914699,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "test 22",
+          "source_interface": "newtest  port1  port3 a",
+          "destination_interface": "port1  port2 a",
+          "source_address": "login.microsoft.com  login.microsoftonline.com  login.windows.net a",
+          "destination_address": "gmail.com  wildcard.dropbox.com  wildcard.google.com a",
+          "schedule": "always a",
+          "service": "NFS  FTP_PUT a",
+          "action": "ACCEPT",
+          "security_profile": "default a",
+          "log_traffic": "All sessions",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "name": "test 22",
+          "source_interface": "newtest  port1  port3 a",
+          "destination_interface": "port1  port2 a",
+          "source_address": "login.microsoft.com  login.microsoftonline.com  login.windows.net a",
+          "destination_address": "gmail.com  wildcard.dropbox.com  wildcard.google.com a",
+          "schedule": "always a",
+          "service": "NFS  FTP_PUT a",
+          "action": "DENY",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "action",
+          "old": "ACCEPT",
+          "new": "DENY"
+        },
+        {
+          "field": "security_profile",
+          "old": "default a"
+        },
+        {
+          "field": "log_traffic",
+          "old": ""
+        },
+        {
+          "field": "log_traffic",
+          "old": "All sessions"
+        },
+        {
+          "field": "log_at_session_start",
+          "old": ""
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766406940150,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "dosnew",
+          "interface": "port3",
+          "source_address": "gmail.comlogin.microsoft.com",
+          "destination_address": "gmail.comlogin.microsoft.com",
+          "service": "HTTPHTTPS",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5678,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "dosnew",
+          "interface": "port3",
+          "source_address": "gmail.comlogin.microsoft.com",
+          "destination_address": "gmail.comlogin.microsoft.com",
+          "service": "FTP_GETFTP_PUTHTTPHTTPS",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5678,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "service",
+          "old": "HTTPHTTPS",
+          "new": "FTP_GETFTP_PUTHTTPHTTPS"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766406961302,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "testdos1",
+          "interface": "port1",
+          "source_address": "login.microsoftonline.comlogin.windows.net",
+          "destination_address": "FABRIC_DEVICESSLVPN_TUNNEL_ADDR1",
+          "service": "ALL_TCPFTPHTTPHTTPS",
+          "log_traffic": true,
+          "action": false,
+          "threshold": 7800,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "testdos1",
+          "interface": "port1",
+          "source_address": "login.microsoftonline.comlogin.windows.net",
+          "destination_address": "FABRIC_DEVICESSLVPN_TUNNEL_ADDR1",
+          "service": "ALL_ICMPALL_ICMP6ALL_TCPFTP",
+          "log_traffic": true,
+          "action": false,
+          "threshold": 7800,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "service",
+          "old": "ALL_TCPFTPHTTPHTTPS",
+          "new": "ALL_ICMPALL_ICMP6ALL_TCPFTP"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766406979498,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "port3",
+          "destination_interface": "port3",
+          "source_address": "10.10.10.14login.microsoft.comlogin.microsoftonline.com",
+          "destination_address": "FIREWALL_AUTH_PORTAL_ADDRESS",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        },
+        "after": {
+          "source_interface": "port3",
+          "destination_interface": "port3                             testipsec3                             testipsec5",
+          "source_address": "10.10.10.14login.microsoft.comlogin.microsoftonline.com",
+          "destination_address": "FIREWALL_AUTH_PORTAL_ADDRESS",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "destination_interface",
+          "old": "port3",
+          "new": "port3                             testipsec3                             testipsec5"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766407017749,
+        "vendor": "fortigate",
+        "object_type": "vpn_ipsec_tunnel",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "tunnel_name": "testipsec5",
+          "tunnel_type": "string:dynamic",
+          "remote_gateway": "0.0.0.0",
+          "interface": "port2",
+          "nat_traversal": "enable",
+          "certificate": "Fortinet_SSL",
+          "auth_mode": false,
+          "peer_id": "",
+          "ike_enc_algo": "string:des",
+          "ike_auth_algo": "string:md5",
+          "dh_group": false,
+          "auth_user": "",
+          "phase2_name": "",
+          "replay": false,
+          "pfs": false,
+          "phase2_protocol": "",
+          "keylife_seconds": ""
+        },
+        "after": {
+          "tunnel_name": "testipsec5",
+          "tunnel_type": "string:dynamic",
+          "remote_gateway": "0.0.0.0",
+          "interface": "port2",
+          "nat_traversal": "enable",
+          "certificate": "Fortinet_SSLFortinet_SSL_ECDSA521",
+          "auth_mode": false,
+          "peer_id": "",
+          "ike_enc_algo": "string:des",
+          "ike_auth_algo": "string:md5",
+          "dh_group": false,
+          "auth_user": "",
+          "phase2_name": "",
+          "replay": false,
+          "pfs": false,
+          "phase2_protocol": "",
+          "keylife_seconds": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "certificate",
+          "old": "Fortinet_SSL",
+          "new": "Fortinet_SSLFortinet_SSL_ECDSA521"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766407041272,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "dosnew",
+          "interface": "port3",
+          "source_address": "gmail.comlogin.microsoft.com",
+          "destination_address": "gmail.comlogin.microsoft.com",
+          "service": "FTP_GETFTP_PUTHTTPHTTPS",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5678,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "dosnew",
+          "interface": "port3",
+          "source_address": "gmail.comlogin.microsoft.com",
+          "destination_address": "fortitest_addgmail.comlogin.microsoft.comnewtest_remote_subnet_1",
+          "service": "FTP_GETFTP_PUTHTTPHTTPS",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5678,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "destination_address",
+          "old": "gmail.comlogin.microsoft.com",
+          "new": "fortitest_addgmail.comlogin.microsoft.comnewtest_remote_subnet_1"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766740944626,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "test 22",
+          "source_interface": "newtest  port1  port3  l2t.root a",
+          "destination_interface": "port1  port2  newtest a",
+          "source_address": "login.microsoft.com  login.microsoftonline.com  login.windows.net a",
+          "destination_address": "gmail.com  wildcard.dropbox.com  wildcard.google.com a",
+          "schedule": "always a",
+          "service": "NFS  FTP_PUT a",
+          "action": "ACCEPT",
+          "log_traffic": "",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "name": "test 22",
+          "source_interface": "newtest  port1  port3  l2t.root a",
+          "destination_interface": "port1  port2  newtest a",
+          "source_address": "login.microsoft.com  login.microsoftonline.com  login.windows.net a",
+          "destination_address": "gmail.com  wildcard.dropbox.com  wildcard.google.com a",
+          "schedule": "always a",
+          "service": "NFS  FTP_PUT a",
+          "action": "DENY",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "action",
+          "old": "ACCEPT",
+          "new": "DENY",
+          "op": "set"
+        },
+        {
+          "field": "log_traffic",
+          "old": "",
+          "op": "add"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766740993747,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "",
+          "interface": "",
+          "source_address": "",
+          "destination_address": "",
+          "service": "",
+          "log_traffic": false,
+          "action": "disable",
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "test1",
+          "interface": "port1",
+          "source_address": "FABRIC_DEVICEFIREWALL_AUTH_PORTAL_ADDRESS",
+          "destination_address": "login.microsoft.comlogin.microsoftonline.com",
+          "service": "ALL_UDP",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "",
+          "new": "test1",
+          "op": "add"
+        },
+        {
+          "field": "interface",
+          "old": "",
+          "new": "port1",
+          "op": "add"
+        },
+        {
+          "field": "source_address",
+          "old": "",
+          "new": "FABRIC_DEVICEFIREWALL_AUTH_PORTAL_ADDRESS",
+          "op": "add"
+        },
+        {
+          "field": "destination_address",
+          "old": "",
+          "new": "login.microsoft.comlogin.microsoftonline.com",
+          "op": "add"
+        },
+        {
+          "field": "service",
+          "old": "",
+          "new": "ALL_UDP",
+          "op": "add"
+        },
+        {
+          "field": "action",
+          "old": "disable",
+          "new": false,
+          "op": "set"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766741050501,
+        "vendor": "fortigate",
+        "object_type": "firewall_address",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "address_name": "",
+          "associated_interface": "any",
+          "address_type": "string:ipmask",
+          "subnet": "0.0.0.0 0.0.0.0",
+          "allow_routing": false,
+          "comments": ""
+        },
+        "after": {
+          "address_name": "TestNew",
+          "associated_interface": "any",
+          "address_type": "string:ipmask",
+          "subnet": "10.10.45.64 255.255.255.255",
+          "allow_routing": false,
+          "comments": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "address_name",
+          "old": "",
+          "new": "TestNew",
+          "op": "add"
+        },
+        {
+          "field": "subnet",
+          "old": "0.0.0.0 0.0.0.0",
+          "new": "10.10.45.64 255.255.255.255",
+          "op": "set"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766741287600,
+        "vendor": "fortigate",
+        "object_type": "vpn_ipsec_tunnel",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "tunnel_name": "",
+          "vpn_template_type": "site2site",
+          "hub_spoke_role": false,
+          "nat_type": "none",
+          "peer_vendor": "fgt",
+          "dialup_client_type": false,
+          "dialup_client_name": false,
+          "tunnel_type": "static",
+          "remote_gateway": "",
+          "interface": "",
+          "auth_method": "psk",
+          "auth_user_group": "",
+          "peer_id": "",
+          "protected_dst_interface": "",
+          "protected_subnet": "",
+          "internet_access_type": "none"
+        },
+        "after": {
+          "tunnel_name": "testtunnel",
+          "vpn_template_type": "site2site",
+          "hub_spoke_role": false,
+          "nat_type": "none",
+          "peer_vendor": "fgt",
+          "dialup_client_type": false,
+          "dialup_client_name": false,
+          "tunnel_type": "static",
+          "remote_gateway": "192.145.167.45",
+          "interface": "port1",
+          "auth_method": false,
+          "certificate": "Fortinet_SSL_DSA2048",
+          "auth_user_group": "",
+          "peer_id": "",
+          "protected_dst_interface": "port3",
+          "protected_subnet": "10.10.67.43/32",
+          "internet_access_type": "none"
+        }
+      },
+      "changes": [
+        {
+          "field": "tunnel_name",
+          "old": "",
+          "new": "testtunnel",
+          "op": "add"
+        },
+        {
+          "field": "remote_gateway",
+          "old": "",
+          "new": "192.145.167.45",
+          "op": "add"
+        },
+        {
+          "field": "interface",
+          "old": "",
+          "new": "port1",
+          "op": "add"
+        },
+        {
+          "field": "auth_method",
+          "old": "psk",
+          "new": false,
+          "op": "set"
+        },
+        {
+          "field": "protected_dst_interface",
+          "old": "",
+          "new": "port3",
+          "op": "add"
+        },
+        {
+          "field": "protected_subnet",
+          "old": "",
+          "new": "10.10.67.43/32",
+          "op": "add"
+        },
+        {
+          "field": "certificate",
+          "new": "Fortinet_SSL_DSA2048",
+          "op": "add"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766742163108,
+        "vendor": "fortigate",
+        "object_type": "admin_user",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "username": "",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        },
+        "after": {
+          "username": "athrav",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "admin_no_access",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        }
+      },
+      "changes": [
+        {
+          "field": "username",
+          "old": "",
+          "new": "athrav",
+          "op": "add"
+        },
+        {
+          "field": "access_profile",
+          "old": "",
+          "new": "admin_no_access",
+          "op": "add"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766742230414,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "",
+          "destination_interface": "",
+          "source_address": "",
+          "destination_address": "",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        },
+        "after": {
+          "source_interface": "port2                             port3",
+          "destination_interface": "port3                             testipsec3",
+          "source_address": "fortitest_addtest1gmail.com",
+          "destination_address": "login.microsoft.comlogin.microsoftonline.com",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 17,
+          "nat_port": true,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "source_interface",
+          "old": "",
+          "new": "port2                             port3",
+          "op": "add"
+        },
+        {
+          "field": "destination_interface",
+          "old": "",
+          "new": "port3                             testipsec3",
+          "op": "add"
+        },
+        {
+          "field": "source_address",
+          "old": "",
+          "new": "fortitest_addtest1gmail.com",
+          "op": "add"
+        },
+        {
+          "field": "destination_address",
+          "old": "",
+          "new": "login.microsoft.comlogin.microsoftonline.com",
+          "op": "add"
+        },
+        {
+          "field": "service",
+          "old": "any",
+          "new": false,
+          "op": "set"
+        },
+        {
+          "field": "service",
+          "old": 0,
+          "new": 17,
+          "op": "set"
+        },
+        {
+          "field": "action",
+          "old": true,
+          "op": "remove"
+        },
+        {
+          "field": "nat_port",
+          "old": false,
+          "new": true,
+          "op": "set"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766742278326,
+        "vendor": "fortigate",
+        "object_type": "firewall_address",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "address_name": "",
+          "associated_interface": "any",
+          "address_type": "string:ipmask",
+          "subnet": "0.0.0.0 0.0.0.0",
+          "allow_routing": false,
+          "comments": ""
+        },
+        "after": {
+          "address_name": "TESTADD",
+          "associated_interface": "port1",
+          "address_type": "string:iprange",
+          "comments": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "address_name",
+          "old": "",
+          "new": "TESTADD",
+          "op": "add"
+        },
+        {
+          "field": "associated_interface",
+          "old": "any",
+          "new": "port1",
+          "op": "set"
+        },
+        {
+          "field": "address_type",
+          "old": "string:ipmask",
+          "new": "string:iprange",
+          "op": "set"
+        },
+        {
+          "field": "subnet",
+          "old": "0.0.0.0 0.0.0.0",
+          "op": "remove"
+        },
+        {
+          "field": "allow_routing",
+          "old": false,
+          "op": "remove"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766742371689,
+        "vendor": "fortigate",
+        "object_type": "network_interface",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {},
+        "after": {
+          "description": "",
+          "vrf": 0,
+          "role": "string:undefined",
+          "gateway": true,
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        }
+      },
+      "changes": [
+        {
+          "field": "description",
+          "new": "",
+          "op": "add"
+        },
+        {
+          "field": "vrf",
+          "new": 0,
+          "op": "add"
+        },
+        {
+          "field": "role",
+          "new": "string:undefined",
+          "op": "add"
+        },
+        {
+          "field": "gateway",
+          "new": true,
+          "op": "add"
+        },
+        {
+          "field": "allow_access",
+          "new": "HTTPS",
+          "op": "add"
+        },
+        {
+          "field": "description",
+          "new": "",
+          "op": "add"
+        },
+        {
+          "field": "admin_status",
+          "new": "up",
+          "op": "add"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766742616813,
+        "vendor": "fortigate",
+        "object_type": "network_interface",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "description": "",
+          "vrf": 0,
+          "role": "string:undefined",
+          "gateway": true,
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        },
+        "after": {
+          "description": "",
+          "vrf": 0,
+          "role": "string:wan",
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        }
+      },
+      "changes": [
+        {
+          "field": "role",
+          "old": "string:undefined",
+          "new": "string:wan",
+          "op": "set"
+        },
+        {
+          "field": "gateway",
+          "old": true,
+          "op": "remove"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766742970161,
+        "vendor": "fortigate",
+        "object_type": "firewall_address",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "address_name": "testtunnel_local_subnet_1",
+          "associated_interface": "any",
+          "address_type": "string:ipmask",
+          "subnet": "10.10.67.43 255.255.255.255",
+          "allow_routing": true,
+          "comments": ""
+        },
+        "after": {
+          "address_name": "tunnel_local_subnet_1",
+          "associated_interface": "any",
+          "address_type": "string:ipmask",
+          "subnet": "10.10.68.43 255.255.255.255",
+          "allow_routing": true,
+          "comments": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "address_name",
+          "old": "testtunnel_local_subnet_1",
+          "new": "tunnel_local_subnet_1",
+          "op": "set"
+        },
+        {
+          "field": "subnet",
+          "old": "10.10.67.43 255.255.255.255",
+          "new": "10.10.68.43 255.255.255.255",
+          "op": "set"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766743036834,
+        "vendor": "fortigate",
+        "object_type": "firewall_address",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "address_name": "testipsec4_local_subnet_1",
+          "associated_interface": "any",
+          "address_type": "string:ipmask",
+          "subnet": "10.10.42.36 255.255.255.255",
+          "allow_routing": true,
+          "comments": ""
+        },
+        "after": {
+          "address_name": "testipsec4_local_subnet_1",
+          "associated_interface": "any",
+          "address_type": "string:ipmask",
+          "subnet": "10.10.89.36 255.255.255.255",
+          "allow_routing": true,
+          "comments": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "subnet",
+          "old": "10.10.42.36 255.255.255.255",
+          "new": "10.10.89.36 255.255.255.255",
+          "op": "set"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766982834606,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "test 11",
+          "source_interface": "port1  port2 a",
+          "destination_interface": "testipsec3  testipsec_2  port3 a",
+          "source_address": "gmail.com  login.microsoft.com  login.microsoftonline.com a",
+          "destination_address": "login.microsoft.com  login.microsoftonline.com  wildcard.dropbox.com  wildcard.google.com a",
+          "schedule": "always a",
+          "service": "FTP_PUT  FTP_GET a",
+          "action": "ACCEPT",
+          "log_traffic": "",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "name": "test 11",
+          "source_interface": "port1  port2 a",
+          "destination_interface": "testipsec3  testipsec_2  port3 a",
+          "source_address": "gmail.com  login.microsoft.com  login.microsoftonline.com a",
+          "destination_address": "login.microsoft.com  login.microsoftonline.com  wildcard.dropbox.com  wildcard.google.com a",
+          "schedule": "always a",
+          "service": "FTP_PUT  FTP_GET a",
+          "action": "DENY",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "action",
+          "old": "ACCEPT",
+          "new": "DENY",
+          "op": "set"
+        },
+        {
+          "field": "log_traffic",
+          "old": "",
+          "op": "add"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766982884109,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "policy_id": 0,
+          "name": "",
+          "source_interface": "a",
+          "destination_interface": "a",
+          "source_address": "a",
+          "destination_address": "a",
+          "schedule": "always a",
+          "action": "ACCEPT",
+          "log_traffic": "Security events",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "policy_id": 0,
+          "name": "test44",
+          "source_interface": "port2  port3 a",
+          "destination_interface": "l2t.root  newtest a",
+          "source_address": "wildcard.google.com  gmail.com a",
+          "destination_address": "gmail.com  wildcard.google.com a",
+          "schedule": "always a",
+          "service": "FTP_GET  FTP_PUT a",
+          "action": "ACCEPT",
+          "log_traffic": "All sessions",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "source_interface",
+          "old": "a",
+          "new": "port2  port3 a",
+          "op": "set"
+        },
+        {
+          "field": "destination_interface",
+          "old": "a",
+          "new": "l2t.root  newtest a",
+          "op": "set"
+        },
+        {
+          "field": "source_address",
+          "old": "a",
+          "new": "wildcard.google.com  gmail.com a",
+          "op": "set"
+        },
+        {
+          "field": "destination_address",
+          "old": "a",
+          "new": "gmail.com  wildcard.google.com a",
+          "op": "set"
+        },
+        {
+          "field": "log_traffic",
+          "old": "Security events",
+          "new": "All sessions",
+          "op": "set"
+        },
+        {
+          "field": "service",
+          "new": "FTP_GET  FTP_PUT a",
+          "op": "add"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766982934075,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "policy_id": 0,
+          "name": "",
+          "source_interface": "a",
+          "destination_interface": "a",
+          "source_address": "a",
+          "destination_address": "a",
+          "schedule": "always a",
+          "action": "ACCEPT",
+          "log_traffic": "Security events",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "policy_id": 0,
+          "name": "test55",
+          "source_interface": "port1  port2  newtest a",
+          "destination_interface": "port1  port2  port3 a",
+          "source_address": "login.microsoft.com  login.windows.net a",
+          "destination_address": "gmail.com  wildcard.google.com  wildcard.dropbox.com a",
+          "schedule": "always a",
+          "service": "FTP_PUT  NFS a",
+          "action": "ACCEPT",
+          "log_traffic": "All sessions",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "",
+          "new": "test55",
+          "op": "add"
+        },
+        {
+          "field": "source_interface",
+          "old": "a",
+          "new": "port1  port2  newtest a",
+          "op": "set"
+        },
+        {
+          "field": "destination_interface",
+          "old": "a",
+          "new": "port1  port2  port3 a",
+          "op": "set"
+        },
+        {
+          "field": "source_address",
+          "old": "a",
+          "new": "login.microsoft.com  login.windows.net a",
+          "op": "set"
+        },
+        {
+          "field": "destination_address",
+          "old": "a",
+          "new": "gmail.com  wildcard.google.com  wildcard.dropbox.com a",
+          "op": "set"
+        },
+        {
+          "field": "log_traffic",
+          "old": "Security events",
+          "new": "All sessions",
+          "op": "set"
+        },
+        {
+          "field": "service",
+          "new": "FTP_PUT  NFS a",
+          "op": "add"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766985194653,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "policy_id": 0,
+          "name": "",
+          "source_interface": "a",
+          "destination_interface": "a",
+          "source_address": "a",
+          "destination_address": "a",
+          "schedule": "always a",
+          "action": "ACCEPT",
+          "log_traffic": "Security events",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "policy_id": 0,
+          "name": "newtest11",
+          "source_interface": "port2  port3 a",
+          "destination_interface": "port3  port2 a",
+          "source_address": "login.microsoft.com  login.windows.net a",
+          "destination_address": "login.microsoft.com  login.windows.net a",
+          "schedule": "always a",
+          "service": "NFS  FTP_PUT a",
+          "action": "DENY",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "",
+          "new": "newtest11",
+          "op": "add"
+        },
+        {
+          "field": "destination_interface",
+          "old": "a",
+          "new": "port3  port2 a",
+          "op": "set"
+        },
+        {
+          "field": "source_address",
+          "old": "a",
+          "new": "login.microsoft.com  login.windows.net a",
+          "op": "set"
+        },
+        {
+          "field": "destination_address",
+          "old": "a",
+          "new": "login.microsoft.com  login.windows.net a",
+          "op": "set"
+        },
+        {
+          "field": "action",
+          "old": "ACCEPT",
+          "new": "DENY",
+          "op": "set"
+        },
+        {
+          "field": "log_traffic",
+          "old": "",
+          "op": "add"
+        },
+        {
+          "field": "log_traffic",
+          "old": "Security events",
+          "op": "remove"
+        },
+        {
+          "field": "log_at_session_start",
+          "old": "",
+          "op": "add"
+        },
+        {
+          "field": "service",
+          "new": "NFS  FTP_PUT a",
+          "op": "add"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766985240038,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "policy_id": 0,
+          "name": "",
+          "source_interface": "a",
+          "destination_interface": "a",
+          "source_address": "a",
+          "destination_address": "a",
+          "schedule": "always a",
+          "action": "ACCEPT",
+          "log_traffic": "Security events",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "policy_id": 0,
+          "name": "test67",
+          "source_interface": "port1  port2  port3 a",
+          "destination_interface": "port2  port3  port1 a",
+          "source_address": "login.microsoft.com  login.windows.net a",
+          "destination_address": "login.windows.net  gmail.com a",
+          "schedule": "always a",
+          "service": "FTP_GET  FTP_PUT a",
+          "action": "ACCEPT",
+          "log_traffic": "Security events",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "",
+          "new": "test67",
+          "op": "add"
+        },
+        {
+          "field": "source_interface",
+          "old": "a",
+          "new": "port1  port2  port3 a",
+          "op": "set"
+        },
+        {
+          "field": "destination_interface",
+          "old": "a",
+          "new": "port2  port3  port1 a",
+          "op": "set"
+        },
+        {
+          "field": "source_address",
+          "old": "a",
+          "new": "login.microsoft.com  login.windows.net a",
+          "op": "set"
+        },
+        {
+          "field": "destination_address",
+          "old": "a",
+          "new": "login.windows.net  gmail.com a",
+          "op": "set"
+        },
+        {
+          "field": "service",
+          "new": "FTP_GET  FTP_PUT a",
+          "op": "add"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766985591397,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "policy_id": 0,
+          "name": "",
+          "source_interface": "a",
+          "destination_interface": "a",
+          "source_address": "a",
+          "destination_address": "a",
+          "schedule": "always a",
+          "action": "ACCEPT",
+          "log_traffic": "Security events",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "policy_id": 0,
+          "name": "testnew11",
+          "source_interface": "port2  port3 a",
+          "destination_interface": "port1  port3 a",
+          "source_address": "wildcard.google.com  gmail.com a",
+          "destination_address": "gmail.com  wildcard.google.com a",
+          "schedule": "always a",
+          "service": "SAMBA  NFS a",
+          "action": "ACCEPT",
+          "log_traffic": "All sessions",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "",
+          "new": "testnew11",
+          "op": "set"
+        },
+        {
+          "field": "source_interface",
+          "old": "a",
+          "new": "port2  port3 a",
+          "op": "set"
+        },
+        {
+          "field": "destination_interface",
+          "old": "a",
+          "new": "port1  port3 a",
+          "op": "set"
+        },
+        {
+          "field": "source_address",
+          "old": "a",
+          "new": "wildcard.google.com  gmail.com a",
+          "op": "set"
+        },
+        {
+          "field": "destination_address",
+          "old": "a",
+          "new": "gmail.com  wildcard.google.com a",
+          "op": "set"
+        },
+        {
+          "field": "log_traffic",
+          "old": "Security events",
+          "new": "All sessions",
+          "op": "set"
+        },
+        {
+          "field": "service",
+          "new": "SAMBA  NFS a",
+          "op": "add"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766985633964,
+        "vendor": "fortigate",
+        "object_type": "service",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "service_name": "",
+          "comments": "",
+          "category": "Uncategorized",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "0.0.0.0",
+          "port_range": "-"
+        },
+        "after": {
+          "service_name": "firewalltestserv",
+          "comments": "",
+          "category": "Email",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "0.0.0.0",
+          "port_range": "-"
+        }
+      },
+      "changes": [
+        {
+          "field": "service_name",
+          "old": "",
+          "new": "firewalltestserv",
+          "op": "add"
+        },
+        {
+          "field": "category",
+          "old": "Uncategorized",
+          "new": "Email",
+          "op": "set"
+        },
+        {
+          "field": "port_lower",
+          "old": "",
+          "new": 1567,
+          "op": "add"
+        },
+        {
+          "field": "port_upper",
+          "old": "",
+          "new": 2000,
+          "op": "add"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766985659125,
+        "vendor": "fortigate",
+        "object_type": "service",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "service_name": "",
+          "comments": "",
+          "category": "Uncategorized",
+          "protocol": "string:TCP/UDP/SCTP",
+          "ip_range": "0.0.0.0",
+          "port_range": "-"
+        },
+        "after": {
+          "service_name": "test123",
+          "comments": "",
+          "category": "Email",
+          "protocol": "string:IP"
+        }
+      },
+      "changes": [
+        {
+          "field": "service_name",
+          "old": "",
+          "new": "test123",
+          "op": "add"
+        },
+        {
+          "field": "category",
+          "old": "Uncategorized",
+          "new": "Email",
+          "op": "set"
+        },
+        {
+          "field": "protocol",
+          "old": "string:TCP/UDP/SCTP",
+          "new": "string:IP",
+          "op": "set"
+        },
+        {
+          "field": "ip_range",
+          "old": "0.0.0.0",
+          "op": "remove"
+        },
+        {
+          "field": "port_range",
+          "old": "-",
+          "op": "remove"
+        },
+        {
+          "field": "port_lower",
+          "old": "",
+          "op": "add"
+        },
+        {
+          "field": "port_upper",
+          "old": "",
+          "op": "add"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766985709758,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "",
+          "interface": "",
+          "source_address": "",
+          "destination_address": "",
+          "service": "",
+          "log_traffic": false,
+          "action": "disable",
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "testdos4",
+          "interface": "port2",
+          "source_address": "FIREWALL_AUTH_PORTAL_ADDRESSfortitest_add",
+          "destination_address": "gmail.comlogin.microsoft.com",
+          "service": "HTTPHTTPS",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "name",
+          "old": "",
+          "new": "testdos4",
+          "op": "add"
+        },
+        {
+          "field": "interface",
+          "old": "",
+          "new": "port2",
+          "op": "add"
+        },
+        {
+          "field": "source_address",
+          "old": "",
+          "new": "FIREWALL_AUTH_PORTAL_ADDRESSfortitest_add",
+          "op": "add"
+        },
+        {
+          "field": "destination_address",
+          "old": "",
+          "new": "gmail.comlogin.microsoft.com",
+          "op": "add"
+        },
+        {
+          "field": "service",
+          "old": "",
+          "new": "HTTPHTTPS",
+          "op": "add"
+        },
+        {
+          "field": "action",
+          "old": "disable",
+          "new": false,
+          "op": "set"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766985754464,
+        "vendor": "fortigate",
+        "object_type": "firewall_address",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "address_name": "fortitest_add",
+          "associated_interface": "port2",
+          "address_type": "string:ipmask",
+          "subnet": "10.10.43.56 255.255.255.255",
+          "allow_routing": true,
+          "comments": ""
+        },
+        "after": {
+          "address_name": "fortitest_add",
+          "associated_interface": "port2",
+          "address_type": "string:ipmask",
+          "subnet": "10.10.78.56 255.255.255.255",
+          "allow_routing": true,
+          "comments": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "subnet",
+          "old": "10.10.43.56 255.255.255.255",
+          "new": "10.10.78.56 255.255.255.255",
+          "op": "set"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766985781935,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "",
+          "destination_interface": "",
+          "source_address": "",
+          "destination_address": "",
+          "status": true
+        },
+        "after": {
+          "source_interface": "port2                             port3",
+          "destination_interface": "port1                             port2                             testipsec3",
+          "source_address": "gmail.comlogin.microsoft.com",
+          "destination_address": "login.microsoftonline.comlogin.windows.net",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 17,
+          "nat_port": false,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "source_interface",
+          "old": "",
+          "new": "port2                             port3",
+          "op": "add"
+        },
+        {
+          "field": "destination_interface",
+          "old": "",
+          "new": "port1                             port2                             testipsec3",
+          "op": "add"
+        },
+        {
+          "field": "source_address",
+          "old": "",
+          "new": "gmail.comlogin.microsoft.com",
+          "op": "add"
+        },
+        {
+          "field": "destination_address",
+          "old": "",
+          "new": "login.microsoftonline.comlogin.windows.net",
+          "op": "add"
+        },
+        {
+          "field": "action",
+          "new": true,
+          "op": "add"
+        },
+        {
+          "field": "snat_type",
+          "new": "nat",
+          "op": "add"
+        },
+        {
+          "field": "translated_source",
+          "new": "Use Outgoing Interface Address",
+          "op": "add"
+        },
+        {
+          "field": "service",
+          "new": false,
+          "op": "add"
+        },
+        {
+          "field": "service",
+          "new": 17,
+          "op": "add"
+        },
+        {
+          "field": "action",
+          "new": true,
+          "op": "add"
+        },
+        {
+          "field": "nat_port",
+          "new": false,
+          "op": "add"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766985806017,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "port1                             port2",
+          "destination_interface": "port3",
+          "source_address": "FIREWALL_AUTH_PORTAL_ADDRESS",
+          "destination_address": "login.microsoft.com",
+          "action": false,
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        },
+        "after": {
+          "source_interface": "port1                             port2",
+          "destination_interface": "port3                             testipsec3",
+          "source_address": "FIREWALL_AUTH_PORTAL_ADDRESS",
+          "destination_address": "login.microsoft.com",
+          "action": false,
+          "service": 17,
+          "nat_port": false,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "destination_interface",
+          "old": "port3",
+          "new": "port3                             testipsec3",
+          "op": "set"
+        },
+        {
+          "field": "service",
+          "old": "any",
+          "new": false,
+          "op": "set"
+        },
+        {
+          "field": "service",
+          "old": 0,
+          "new": 17,
+          "op": "set"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1766985860768,
+        "vendor": "fortigate",
+        "object_type": "network_interface",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "description": "",
+          "vrf": 0,
+          "role": "string:undefined",
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        },
+        "after": {
+          "description": "",
+          "vrf": 0,
+          "role": "string:wan",
+          "allow_access": "HTTPS",
+          "admin_status": "up"
+        }
+      },
+      "changes": [
+        {
+          "field": "role",
+          "old": "string:undefined",
+          "new": "string:wan",
+          "op": "set"
+        }
+      ]
+    }
+  ]
+}

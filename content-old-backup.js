@@ -61,7 +61,7 @@
     }
 
     console.log('📄 Starting script injection sequence...');
-    
+
     for (const scriptName of scriptsToInject) {
       try {
         await injectScript(scriptName);
@@ -79,48 +79,46 @@
     injectPasswordMonitor();
   }
 
-      // Inject ml-vpn-collector.js twenty-first
-      const s21 = document.createElement('script');
-      s21.src = chrome.runtime.getURL('ml-vpn-collector.js');
-      s21.onload = () => {
-        console.log('✅ ml-vpn-collector.js loaded');
-        s21.remove();
-      };
-      s21.onerror = (e) => {
-        console.error('❌ Failed to load ml-vpn-collector.js:', e);
-      };
-      (document.head || document.documentElement).appendChild(s21);
+  // Inject ml-vpn-collector.js twenty-first
+  const s21 = document.createElement('script');
+  s21.src = chrome.runtime.getURL('ml-vpn-collector.js');
+  s21.onload = () => {
+    console.log('✅ ml-vpn-collector.js loaded');
+    s21.remove();
+  };
+  s21.onerror = (e) => {
+    console.error('❌ Failed to load ml-vpn-collector.js:', e);
+  };
+  (document.head || document.documentElement).appendChild(s21);
 
 
 
-      // Inject ml-inference.js twenty-second
-      const s_inference = document.createElement('script');
-      s_inference.src = chrome.runtime.getURL('ml-inference.js') + '?t=' + Date.now();
-      s_inference.onload = () => {
-        console.log('✅ ml-inference.js loaded');
-        s_inference.remove();
-      };
-      s_inference.onerror = (e) => {
-        console.error('❌ Failed to load ml-inference.js:', e);
-      };
-      (document.head || document.documentElement).appendChild(s_inference);
+  // Inject ml-inference.js twenty-second
+  const s_inference = document.createElement('script');
+  s_inference.src = chrome.runtime.getURL('ml-inference.js') + '?t=' + Date.now();
+  s_inference.onload = () => {
+    console.log('✅ ml-inference.js loaded');
+    s_inference.remove();
+  };
+  s_inference.onerror = (e) => {
+    console.error('❌ Failed to load ml-inference.js:', e);
+  };
+  (document.head || document.documentElement).appendChild(s_inference);
 
-      // Inject ml-unified-collector.js twenty-third (MUST BE LAST)
-      const s22 = document.createElement('script');
-      s22.src = chrome.runtime.getURL('ml-unified-collector.js') + '?t=' + Date.now();
-      s22.setAttribute('data-model-url', chrome.runtime.getURL('model_data.json'));
-      s22.onload = () => {
-        console.log('✅ ml-unified-collector.js loaded');
-        s22.remove();
-      };
-      s22.onerror = (e) => {
-        console.error('❌ Failed to load ml-unified-collector.js:', e);
-      };
-      (document.head || document.documentElement).appendChild(s22);
-    } catch (e) {
-      console.error('❌ Failed to inject monitors:', e);
-    }
-  }
+  // Inject ml-unified-collector.js twenty-third (MUST BE LAST)
+  const s22 = document.createElement('script');
+  s22.src = chrome.runtime.getURL('ml-unified-collector.js') + '?t=' + Date.now();
+  s22.setAttribute('data-model-url', chrome.runtime.getURL('model_data.json'));
+  s22.onload = () => {
+    console.log('✅ ml-unified-collector.js loaded');
+    s22.remove();
+  };
+  s22.onerror = (e) => {
+    console.error('❌ Failed to load ml-unified-collector.js:', e);
+  };
+  (document.head || document.documentElement).appendChild(s22);
+
+
 
   // Inject ONLY ONCE - prevent duplicates
   if (!window.__MONITORS_INJECTED__) {

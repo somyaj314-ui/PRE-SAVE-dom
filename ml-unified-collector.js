@@ -5,6 +5,14 @@
 (function () {
     'use strict';
 
+    // RE-INJECTION CLEANUP
+    if (typeof window.__STOP_ML_COLLECTOR__ === 'function') {
+        try {
+            console.log('♻️ Re-injection: Cleaning up old ML Collector...');
+            window.__STOP_ML_COLLECTOR__();
+        } catch (e) { }
+    }
+
     console.log('🤖 ML Unified Collector (Universal) Initialized');
 
     let allSamples = [];
@@ -17,126 +25,98 @@
         by_type: {}
     };
 
-    /**
-     * Listen for Vendor Map from content.js
-     */
-    window.addEventListener('message', function (event) {
-        if (event.source !== window) return;
+    // Initialize Shortcuts
+    const shortcutHandler = (e) => {
+        if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+            e.preventDefault();
+            downloadUnifiedSamples();
+        }
+        if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+            if (confirm('Clear all samples?')) clearAllSamples();
+        }
+    };
+
+    const messageHandler = (event) => {
+        if (event.source !== window || !event.data || !event.data.type) return;
+
+        // Handle VENDOR_MAP_LOADED
         if (event.data.type === 'VENDOR_MAP_LOADED') {
             vendorMap = event.data.data;
+            window.__VENDOR_MAP__ = vendorMap; // Set global for other scripts to see
             console.log('🗺️ Unified Collector received Vendor Map:', Object.keys(vendorMap || {}));
         }
-    });
-
-    /**
-     * Listen for Universal Events
-     */
-    window.addEventListener('message', function (event) {
-        if (event.source !== window) return;
-
-        const msg = event.data;
-
-        if (msg.type === 'UNIVERSAL_MONITOR_START') {
-            console.log('👁️ Monitoring Started:', msg.data.url);
-        } else if (msg.type === 'UNIVERSAL_EVENT_SAVED') {
-            console.log('📥 Unified Collector received SAVE event');
-            processUniversalEvent(msg.data);
-        } else if (msg.type === 'UNIVERSAL_STREAM_EVENT') {
-            // High frequency updates from forms
-            processStreamEvent(msg.data);
+        // Handle UNIVERSAL_MONITOR_START
+        else if (event.data.type === 'UNIVERSAL_MONITOR_START') {
+            console.log('🏁 Universal Monitor Update received:', event.data.data.url);
         }
-    });
+        // Handle UNIVERSAL_EVENT_SAVED
+        else if (event.data.type === 'UNIVERSAL_EVENT_SAVED') {
+            console.log('📥 Unified Collector received SAVE event');
+            processUniversalEvent(event.data.data);
+        }
+        // Handle UNIVERSAL_STREAM_EVENT or UNIVERSAL_STREAM_CHANGE
+        else if (event.data.type === 'UNIVERSAL_STREAM_EVENT' || event.data.type === 'UNIVERSAL_STREAM_CHANGE') {
+            processStreamEvent(event.data.data);
+        }
+    };
+
+    window.addEventListener('message', messageHandler);
+    document.addEventListener('keydown', shortcutHandler);
+
+    // CLEANUP REGISTRY
+    window.__STOP_ML_COLLECTOR__ = () => {
+        console.log('🧹 Stopping old ML Collector instances...');
+        document.removeEventListener('keydown', shortcutHandler);
+        window.removeEventListener('message', messageHandler);
+    };
 
     /**
      * Create Canonical Sample from Raw Data
      */
-    function createCanonicalSample(rawData) {
-        if (!vendorMap) {
-            console.warn('⚠️ Vendor map not loaded yet, processing with raw keys.');
-        }
+    function createCanonicalSample(rawData, isStreaming = false) {
+        const { before, after, timestamp, url: eventUrl } = rawData;
+        const url = eventUrl || window.location.href;
 
-        const { before, after, changes, timestamp } = rawData;
-        const url = window.location.href;
-
-        // 1. Detect Vendor & Object Type
         const vendor = detectVendor(url);
         const objectType = detectObjectType(url);
 
-        // Filter out unknown objects
-        if (objectType === 'unknown_object') return null;
-
-        // 2. Map fields to canonical names
-        let canonicalBefore = mapFields(before, vendor, objectType);
-        let canonicalAfter = mapFields(after, vendor, objectType);
-
-        // 3. Map changes with STRICT canonical filtering
-        const config = vendorMap?.[vendor]?.[objectType];
-        const mapping = config?.mappings || {};
-        const allowedFields = config?.canonical_fields || [];
-
-        const canonicalChanges = [];
-        changes.forEach(change => {
-            let canonicalField = mapping[change.field] || change.field;
-            if (allowedFields.includes(canonicalField) || canonicalField === 'port_lower' || canonicalField === 'port_upper') {
-                canonicalChanges.push({
-                    field: canonicalField,
-                    old: normalizeValue(change.old_value),
-                    new: normalizeValue(change.new_value),
-                    op: change.op // Preserve operation (add/remove/set)
-                });
-            }
-        });
-
-        // 4. Object-Specific Post-Processing (Flattening)
-        if (objectType === 'service') {
-            const flattenPortRange = (obj) => {
-                if (obj.port_lower !== undefined && obj.port_upper !== undefined) {
-                    obj.port_range = `${obj.port_lower}-${obj.port_upper}`;
-                    delete obj.port_lower; delete obj.port_upper;
-                } else if (obj.port_lower !== undefined) {
-                    obj.port_range = `${obj.port_lower}`;
-                    delete obj.port_lower;
-                } else if (obj.port_upper !== undefined) {
-                    obj.port_range = `${obj.port_upper}`;
-                    delete obj.port_upper;
-                }
-            };
-            flattenPortRange(canonicalBefore);
-            flattenPortRange(canonicalAfter);
+        // Ensure map is loaded (Fallback to global if message was missed)
+        if (!vendorMap && window.__VENDOR_MAP__) {
+            vendorMap = window.__VENDOR_MAP__;
         }
 
-        // 5. Determine Operation Mode
+        const canonicalBefore = mapFields(before, vendor, objectType);
+        const canonicalAfter = mapFields(after, vendor, objectType);
+        const canonicalChanges = computeDiff(canonicalBefore, canonicalAfter);
+
+        const config = vendorMap?.[vendor]?.[objectType];
         const identityField = config?.identity_field;
         let isCreate = true;
 
         if (identityField) {
-            // Strongest signal: Does the identity field (e.g. policy_id, name) have a value in the BEFORE state?
             const identityValue = canonicalBefore[identityField];
-            // Check for valid existing ID: not null, not undefined, not empty string, not 0 (if number)
             isCreate = !identityValue || identityValue === '' || identityValue === null || identityValue === undefined || identityValue === 0 || identityValue === '0';
         } else {
-            // Fallback: If we have substantial before state, it's likely an edit.
-            // A "Create New" form typically has very few populated fields compared to an "Edit" form on load.
-            // However, relying solely on this is risky if defaults are extensive.
-            // Better to assume CREATE unless proven otherwise by identity field.
             isCreate = Object.keys(canonicalBefore).length === 0;
         }
 
-        // Logic check: If it's a "policy" object, and we have a policy_id, it's definitely an EDIT
-        if (objectType === 'policy' && canonicalBefore['policy_id'] && canonicalBefore['policy_id'] !== '0') {
-            isCreate = false;
-        }
+        // Classification is derived strictly from identity fields above.
+        // URL/Title heuristics (Signals 1-4) have been removed to ensure data-derived integrity.
+
+        // Classification is derived strictly from identity fields above.
+        // Rule: {} => CREATE.
+        // Training: DROP (if before is empty).
+        // Inference: No forced labels, rely on provided evidence.
 
         const operation = isCreate ? 'CREATE' : 'EDIT';
 
-        // 6. Construct Sample
         return {
             metadata: {
                 timestamp: timestamp || Date.now(),
                 vendor: vendor,
                 object_type: objectType,
                 operation: operation,
-                data_source: 'universal_extractor'
+                data_source: 'universal_collector'
             },
             data: {
                 before: canonicalBefore,
@@ -150,8 +130,24 @@
      * Process Save Event (Post-Save)
      */
     function processUniversalEvent(rawData) {
-        const sample = createCanonicalSample(rawData);
+        // NOISE FILTER: Ignore known noisy/failing endpoints that don't represent real config changes
+        const url = window.location.href;
+        if (url.includes('security-rating') || url.includes('/monitor/')) {
+            console.log('🔇 Noise Filter: Skipping event from monitor endpoint.');
+            return;
+        }
+
+        const sample = createCanonicalSample(rawData, false);
         if (!sample) return;
+
+        // RULE 2: Binary Save Logic - Authoritative Before must be present (Except for CREATE)
+        const beforeCount = Object.keys(sample.data.before).length;
+        const isCreate = sample.metadata.operation === 'CREATE';
+
+        if (beforeCount === 0 && !isCreate) {
+            console.warn('❌ Dropping training sample: missing authoritative BEFORE state for EDIT');
+            return;
+        }
 
         console.log(`🔎 Detected (Save): ${sample.metadata.vendor} / ${sample.metadata.object_type}`);
 
@@ -163,7 +159,11 @@
         console.log('✅ Canonical Sample Collected:', sample);
 
         // Broadcast for Tray App
-        dispatchLegacyEvent(sample.metadata.object_type, window.location.href, sample.metadata.operation);
+        if (sample.metadata.operation === 'CREATE' || sample.changes.length > 0) {
+            dispatchLegacyEvent(sample);
+        } else {
+            console.log('ℹ️ No canonical changes detected. Legacy event suppressed.');
+        }
 
         // Run Inference (Final confirmation)
         if (mlEngine) {
@@ -180,7 +180,7 @@
      * Process Stream Event (Pre-Save)
      */
     function processStreamEvent(rawData) {
-        const sample = createCanonicalSample(rawData);
+        const sample = createCanonicalSample(rawData, true); // isStreaming = true
         if (!sample) return;
 
         // Run Inference immediately for real-time intent detection
@@ -202,31 +202,58 @@
 
         const prediction = mlEngine.predict(sample);
         if (prediction) {
-            // console.log(`🔮 Prediction (${isStreaming ? 'Live' : 'Final'}):`, prediction.label);
+            // BROADCAST FILTER: Only raise popup for streaming IF there are actual changes
+            // This prevents "Automatic" popups on page land.
+            if (isStreaming && sample.changes.length === 0) {
+                // Silently log for debug but don't broadast to tray app
+                // console.log('🔮 ML Prediction (Idle): Prediction exists but no changes, suppressing popup.');
+                return;
+            }
 
-            // Broadcast prediction result
-            window.postMessage({
-                type: 'ML_PREDICTION_RESULT',
-                data: prediction,
-                isStreaming: isStreaming // CRITICAL: Tell the world if this is pre-save
-            }, '*');
+            // BROADCAST: Only for streaming (Pre-Save)
+            // Post-save inference is silent (logging only)
+            if (isStreaming) {
+                window.postMessage({
+                    type: 'ML_PREDICTION_RESULT',
+                    data: prediction,
+                    isStreaming: true
+                }, '*');
+            } else {
+                console.log('🔮 ML Post-Save Verification (Silent):', prediction);
+            }
         }
     }
 
     /**
-     * Normalize value to proper type (boolean, number, string)
+     * Compute Difference between states (Canonical)
+     */
+    function computeDiff(before, after) {
+        const changes = [];
+        const allKeys = new Set([...Object.keys(before), ...Object.keys(after)]);
+
+        allKeys.forEach(key => {
+            const b = before[key];
+            const a = after[key];
+
+            if (JSON.stringify(b) !== JSON.stringify(a)) {
+                changes.push({
+                    field: key,
+                    old: b,
+                    new: a
+                });
+            }
+        });
+
+        return changes;
+    }
+
+    /**
      * Normalize value to proper type (boolean, number, string)
      */
     function normalizeValue(value) {
-        // Null/undefined passthrough
         if (value === null || value === undefined) return value;
+        if (Array.isArray(value)) return value.map(v => normalizeValue(v));
 
-        // Array normalization (recursive)
-        if (Array.isArray(value)) {
-            return value.map(v => normalizeValue(v));
-        }
-
-        // Boolean normalization
         if (typeof value === 'string') {
             const lower = value.toLowerCase().trim();
             if (lower === 'on' || lower === 'checked' || lower === 'enabled' || lower === 'yes') return true;
@@ -234,277 +261,109 @@
             if (lower === 'true') return true;
             if (lower === 'false') return false;
 
-            // Number normalization
-            if (!isNaN(value) && value.trim() !== '') {
-                return Number(value);
-            }
+            if (!isNaN(value) && value.trim() !== '') return Number(value);
         }
 
-        return value; // Keep as-is
+        return value;
     }
 
     /**
      * Dispatch Legacy Events for Tray App (Backward Compatibility)
      */
-    function dispatchLegacyEvent(objectType, url, operation) {
+    function dispatchLegacyEvent(sample) {
+        const { metadata, data } = sample;
+        const objectType = metadata.object_type;
+        const operation = metadata.operation;
+        const url = window.location.href;
+
         const isCreate = operation === 'CREATE';
         const mode = isCreate ? 'create' : 'edit';
+        const after = data.after || {};
 
-        if (objectType === 'policy') {
+        const types = {
+            'policy': 'POLICY_CHANGE',
+            'admin_user': 'ADMIN_USER_CHANGE',
+            'dos_policy': 'DOS_POLICY_CHANGE',
+            'vpn_ipsec_tunnel': 'VPN_CHANGE',
+            'network_interface': 'INTERFACE_CHANGE',
+            'firewall_address': 'ADDRESS_CHANGE',
+            'central_snat': 'CENTRAL_SNAT_CHANGE',
+            'service': 'FIREWALL_SERVICE_CHANGE'
+        };
+
+        const eventTypeEnum = {
+            'policy': isCreate ? 'POLICY_CREATED' : 'POLICY_EDITED',
+            'admin_user': isCreate ? 'ADMIN_USER_CREATED' : 'ADMIN_USER_UPDATED',
+            'dos_policy': isCreate ? 'DOS_POLICY_CREATED' : 'DOS_POLICY_UPDATED',
+            'vpn_ipsec_tunnel': isCreate ? 'VPN_CREATED' : 'VPN_EDITED',
+            'network_interface': isCreate ? 'INTERFACE_CREATED' : 'INTERFACE_EDITED',
+            'firewall_address': isCreate ? 'ADDRESS_CREATED' : 'ADDRESS_UPDATED',
+            'central_snat': isCreate ? 'CENTRAL_SNAT_CREATED' : 'CENTRAL_SNAT_UPDATED',
+            'service': isCreate ? 'FIREWALL_SERVICE_CREATED' : 'FIREWALL_SERVICE_UPDATED'
+        };
+
+        const type = types[objectType];
+        if (type) {
             window.postMessage({
-                type: 'POLICY_CHANGE',
-                eventType: isCreate ? 'POLICY_CREATED' : 'POLICY_EDITED',
+                type: type,
+                eventType: eventTypeEnum[objectType],
                 data: {
                     mode: mode,
-                    status: 'saved',
+                    username: after.username || after.user_name || after.name || 'Admin User',
+                    userType: after.type || 'admin',
                     url: url,
                     title: document.title,
                     timestamp: Date.now()
                 }
             }, '*');
-            console.log('📨 Sent Legacy POLICY_CHANGE for Tray App');
+            console.log(`📨 Sent Legacy ${type} for Tray App (${operation})`);
         }
-        else if (objectType === 'admin_user') {
-            window.postMessage({
-                type: 'ADMIN_USER_CHANGE',
-                eventType: isCreate ? 'ADMIN_USER_CREATED' : 'ADMIN_USER_MODIFIED',
-                data: {
-                    username: 'Admin User', // Universal extractor might not extract specific name easily here without mapping check
-                    userType: 'admin',
-                    url: url,
-                    timestamp: Date.now()
-                }
-            }, '*');
-            console.log('📨 Sent Legacy ADMIN_USER_CHANGE for Tray App');
-        }
-        else if (objectType === 'dos_policy') {
-            window.postMessage({
-                type: 'DOS_POLICY_CHANGE',
-                eventType: isCreate ? 'DOS_POLICY_CREATED' : 'DOS_POLICY_EDITED',
-                data: {
-                    mode: mode,
-                    status: 'saved',
-                    url: url,
-                    timestamp: Date.now()
-                }
-            }, '*');
-            console.log('📨 Sent Legacy DOS_POLICY_CHANGE for Tray App');
-        }
-        else if (objectType === 'vpn_ipsec_tunnel') {
-            window.postMessage({
-                type: 'VPN_CHANGE',
-                eventType: isCreate ? 'VPN_CREATED' : 'VPN_MODIFIED',
-                data: {
-                    mode: mode,
-                    url: url,
-                    timestamp: Date.now()
-                }
-            }, '*');
-            console.log('📨 Sent Legacy VPN_CHANGE for Tray App');
-        }
-        else if (objectType === 'network_interface') {
-            window.postMessage({
-                type: 'INTERFACE_CHANGE',
-                eventType: isCreate ? 'INTERFACE_CREATED' : 'INTERFACE_MODIFIED',
-                data: {
-                    mode: mode,
-                    url: url,
-                    timestamp: Date.now()
-                }
-            }, '*');
-            console.log('📨 Sent Legacy INTERFACE_CHANGE for Tray App');
-        }
-        else if (objectType === 'firewall_address') {
-            window.postMessage({
-                type: 'ADDRESS_CHANGE',
-                eventType: isCreate ? 'ADDRESS_CREATED' : 'ADDRESS_MODIFIED',
-                data: {
-                    mode: mode,
-                    url: url,
-                    timestamp: Date.now()
-                }
-            }, '*');
-            console.log('📨 Sent Legacy ADDRESS_CHANGE for Tray App');
-        }
-        else if (objectType === 'central_snat') {
-            window.postMessage({
-                type: 'SNAT_CHANGE',
-                eventType: isCreate ? 'SNAT_CREATED' : 'SNAT_MODIFIED',
-                data: {
-                    mode: mode,
-                    url: url,
-                    timestamp: Date.now()
-                }
-            }, '*');
-            console.log('📨 Sent Legacy SNAT_CHANGE for Tray App');
-        }
-        // Add other legacy types as needed
     }
 
-    /**
-     * Detect Vendor from URL
-     */
     function detectVendor(url) {
-        if (url.includes('paloaltonetworks') || url.includes('#objects') || url.includes('#device') || url.includes('#network') || url.includes('#monitor')) {
-            return 'paloalto';
-        }
-        // Default to FortiGate as it's the primary vendor
+        if (url.includes('paloaltonetworks')) return 'paloalto';
         return 'fortigate';
     }
 
-    /**
-     * Detect Object Type from URL (Heuristic)
-     * Expanded to support all object types in vendor_field_map.json
-     */
     function detectObjectType(url) {
         const u = url.toLowerCase();
-
-        // Palo Alto Detection
         if (u.includes('device/administrators')) return 'admin_user';
         if (u.includes('objects/addresses')) return 'firewall_address';
-        if (u.includes('policies/pbf-rulebase')) return 'pbf_rule'; // New PBF Rule support
-
-        // IMPORTANT: Check most specific patterns FIRST
-
-        // NAT (Check before Policy because URLs can contain both 'policy' and 'snat')
         if (u.includes('snat') || u.includes('central-snat')) return 'central_snat';
-
-        // DoS policy must be checked BEFORE regular policy
         if (u.includes('dos') && u.includes('policy')) return 'dos_policy';
-        if (u.includes('dos-policy')) return 'dos_policy';
-
-        // Policy types (check after DoS and NAT)
         if (u.includes('policy/policy') || u.includes('firewall/policy')) return 'policy';
-
-        // Admin & Authentication
-        if (u.includes('admin') && u.includes('user')) return 'admin_user';
-        if (u.includes('admin') && u.includes('edit')) return 'admin_user';
-        if (u.includes('/ng/admin')) return 'admin_user'; // FortiGate Angular UI
-
-        // VPN
-        if (u.includes('vpn') && (u.includes('ipsec') || u.includes('tunnel'))) return 'vpn_ipsec_tunnel';
-
-        // Network
-        if (u.includes('system/interface') || u.includes('network/interface') || u.includes('ng/interface')) return 'network_interface';
-
-        // Firewall Objects
+        if (u.includes('admin') && (u.includes('user') || u.includes('edit')) || u.includes('/ng/admin')) return 'admin_user';
+        if (u.includes('vpn') && (u.includes('ipsec') || u.includes('tunnel') || u.includes('wizard') || u.includes('vpnipsec'))) return 'vpn_ipsec_tunnel';
+        if (u.includes('interface')) return 'network_interface';
         if (u.includes('firewall/address')) return 'firewall_address';
         if (u.includes('firewall/service')) return 'service';
-
         return 'unknown_object';
     }
 
-    /**
-     * Check if a field key is DOM/UI noise that should be filtered out
-     */
     function isDOMNoise(key) {
-        const noisePatterns = [
-            /^for_id_/,           // for_id_mj6po5w1 - session-specific DOM IDs
-            /^radio_id/,          // radio_idmj6po5vu - UI radio button IDs
-            /^__/,                // __internal - private variables
-            /^_ng/,               // _ngcontent - Angular internal
-            /^data-ng/,           // data-ng-* - Angular directives
-            /^\$/,                // $scope, $ctrl - Angular scope (but NOT ng:$ctrl.field)
-            /^aria-/,             // aria-* - UI accessibility attributes
-            /^data-/              // data-* - generic data attributes
-        ];
-
+        const noisePatterns = [/^for_id_/, /^radio_id/, /^__/, /^_ng/, /^data-ng/, /^\$/, /^aria-/, /^data-/];
         return noisePatterns.some(pattern => pattern.test(key));
     }
 
-    /**
-     * Map a single key (legacy - now uses mapFields for strict filtering)
-     */
-    function mapKey(key, vendor, objectType) {
-        if (!vendorMap) return key;
-        try {
-            const mapping = vendorMap[vendor]?.[objectType]?.mappings;
-            if (mapping && mapping[key]) {
-                return mapping[key];
-            }
-        } catch (e) {
-            // ignore
-        }
-        return key; // Fallback to raw key
-    }
-
-    /**
-     * Map entire object with STRICT CANONICAL FILTERING
-     * Only fields in canonical_fields whitelist are kept
-     */
     function mapFields(obj, vendor, objectType) {
         if (!obj) return {};
-
         const config = vendorMap?.[vendor]?.[objectType];
         const mapping = config?.mappings || {};
         const allowedFields = config?.canonical_fields || [];
-
         const mapped = {};
-        const dropped = [];
 
-        // If no vendor map, at least filter DOM noise and normalize
-        if (!config) {
-            Object.keys(obj).forEach(k => {
-                if (!isDOMNoise(k)) {
-                    mapped[k] = normalizeValue(obj[k]);
-                } else {
-                    dropped.push(k);
-                }
-            });
-
-            if (dropped.length > 0) {
-                console.log(`🗑️ Dropped DOM noise (no mapping for ${objectType}):`, dropped.slice(0, 10));
-            }
-            return mapped;
-        }
-
-        // STRICT MODE: Only keep fields in canonical whitelist
         Object.keys(obj).forEach(k => {
-            // Skip obvious DOM noise first
-            if (isDOMNoise(k)) {
-                dropped.push(`${k} (DOM noise)`);
-                return;
-            }
-
-            // Try to map the key
-            const mappedKey = mapping[k];
-
-            if (mappedKey) {
-                // Key has a mapping - check if mapped key is in whitelist
-                if (allowedFields.includes(mappedKey)) {
-                    mapped[mappedKey] = normalizeValue(obj[k]);
-                } else {
-                    dropped.push(`${k} → ${mappedKey} (not in whitelist)`);
-                }
-            } else {
-                // No mapping - check if original key is in whitelist
-                if (allowedFields.includes(k)) {
-                    mapped[k] = normalizeValue(obj[k]);
-                } else {
-                    dropped.push(`${k} (unmapped, not in whitelist)`);
-                }
+            if (isDOMNoise(k)) return;
+            const mappedKey = mapping[k] || k;
+            if (!config || allowedFields.includes(mappedKey)) {
+                mapped[mappedKey] = normalizeValue(obj[k]);
             }
         });
-
-        // Log dropped fields for debugging
-        if (dropped.length > 0) {
-            console.log(`🗑️ Dropped non-canonical fields (${objectType}):`, dropped.slice(0, 15));
-            if (dropped.length > 15) {
-                console.log(`   ... and ${dropped.length - 15} more`);
-            }
-        }
-
         return mapped;
     }
 
-    // --- Export / Download Utils (Preserved from old version) ---
-
     function downloadUnifiedSamples() {
-        const exportData = {
-            version: "2.0-universal",
-            stats: collectionStats,
-            samples: allSamples
-        };
+        const exportData = { version: "2.0-universal", stats: collectionStats, samples: allSamples };
         const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -520,22 +379,5 @@
         console.log('🗑️ Samples cleared.');
     }
 
-    // Initialize Shortcuts
-    document.addEventListener('keydown', (e) => {
-        if (e.ctrlKey && e.shiftKey && e.key === 'D') {
-            e.preventDefault();
-            downloadUnifiedSamples();
-        }
-        if (e.ctrlKey && e.shiftKey && e.key === 'C') {
-            if (confirm('Clear all samples?')) clearAllSamples();
-        }
-    });
-
-    // Expose Global API
-    window.MLUnifiedCollector = {
-        downloadUnifiedSamples,
-        clearAllSamples,
-        getAllSamples: () => allSamples
-    };
-
+    window.MLUnifiedCollector = { downloadUnifiedSamples, clearAllSamples, getAllSamples: () => allSamples };
 })();

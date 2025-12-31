@@ -40,6 +40,26 @@ function initDatabase() {
 // Initialize on extension load
 initDatabase();
 
+// RE-INJECTION LOGIC: Automatically re-inject content scripts into existing tabs
+// This fixes the "Extension context invalidated" error without requiring a page refresh.
+chrome.runtime.onInstalled.addListener(async (details) => {
+  console.log('🚀 Extension installed/reloaded. Re-injecting content scripts...');
+
+  const tabs = await chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] });
+
+  for (const tab of tabs) {
+    try {
+      await chrome.scripting.executeScript({
+        target: { tabId: tab.id, allFrames: true },
+        files: ['content.js']
+      });
+      console.log(`✅ Re-injected into tab ${tab.id}: ${tab.url}`);
+    } catch (err) {
+      console.warn(`❌ Could not re-inject into tab ${tab.id}: ${err.message}`);
+    }
+  }
+});
+
 // Test connection on startup
 setTimeout(() => {
   console.log('🧪 Testing tray app connection...');

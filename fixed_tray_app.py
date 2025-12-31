@@ -753,7 +753,7 @@ class TrayApp:
         self.stats['last_detection'] = datetime.now().strftime("%H:%M:%S")
         
         # Check for duplicates
-        detection_key = f"admin:{username}:{admin_data.get('url')}"
+        detection_key = f"admin:{username}:{admin_data.get('url')}:{admin_event_type}"
         is_duplicate = self._is_duplicate_detection(detection_key)
         
         if not is_duplicate:
@@ -1011,19 +1011,28 @@ class TrayApp:
         """Handle ML prediction result events (Streaming only)"""
         is_streaming = data.get('isStreaming', False)
         
-        # User explicitly requested ONLY pre-save notifications
-        if not is_streaming:
-            print(f"🔮 ML Prediction: Suppressing post-save result")
-            return
-
         ml_data = data.get('data', {})
         label = ml_data.get('label', 'unknown')
         confidence = ml_data.get('confidence', 0)
-        
+
+        # Post-save confirmation (ML Verified)
+        if not is_streaming:
+            print(f"🔮 ML Prediction (Final): {label} ({confidence:.2%})")
+            # User requested removal of this final verification popup
+            # detection_key = f"ML_FINAL:{label}"
+            # if self._is_duplicate_detection(detection_key):
+            #     return
+            #     
+            # self.show_notification(
+            #     "✅ ML Verified: " + label.replace('_', ' ').title(),
+            #     f"Model successfully classified this change as {label.split(' ')[-1]} ."
+            # )
+            return
+
         print(f"🔮 ML Streaming Prediction: {label} ({confidence:.2%})")
         
-        # Only show notification if confidence is reasonable (>40% for streaming)
-        if confidence > 0.4:
+        # Only show notification if confidence is reasonable (>30% for streaming)
+        if confidence > 0.5:
             # DEDUPLICATION
             detection_key = f"ML_STREAM:{label}"
             self.duplicate_window = 10 # 10 seconds debounce for SAME prediction state
@@ -1046,9 +1055,9 @@ class TrayApp:
                 else:
                     base_op = op_name
                 
-                title = f"🔮 ML: {base_op}{suffix} {obj_name}" # CREATING POLICY
+                title = f"🔮 ML Predicted: {base_op}{suffix} {obj_name}" # CREATING POLICY
             else:
-                title = f"🔮 ML PREDICTION: {label.replace('_', ' ').upper()}"
+                title = f"🔮 ML Predicted: {label.replace('_', ' ').title()}"
                 
             self.show_notification(
                 title,
@@ -1068,29 +1077,8 @@ class TrayApp:
     
                # Handle admin user creation/edit events (NEW)
         if event_type == 'ADMIN_USER_CHANGE':
-            # Get event details
-            event_data = data.get('data', {})
-            admin_event_type = data.get('eventType', 'UNKNOWN')
-            username = event_data.get('username', 'Unknown')
-            
-            print(f"👤 Admin User Event: {admin_event_type}")
-            
-            # Show appropriate notification
-            # Show appropriate notification
-            if admin_event_type == 'ADMIN_USER_CREATING':
-                # self.show_notification("👤 Creating Admin User", "User is creating a new admin user...")
-                print(f"🔔 Suppressing ADMIN_USER_CREATING notification (Rule-based)")
-            elif admin_event_type == 'ADMIN_USER_EDITING':
-                # self.show_notification("👤 Editing Admin User", f"User is editing admin user: {username}")
-                print(f"🔔 Suppressing ADMIN_USER_EDITING notification (Rule-based)")
-            elif admin_event_type == 'ADMIN_USER_CREATED':
-                # self.show_notification("✅ Admin User Created!", "Admin user created successfully!")
-                print(f"🔔 Suppressing ADMIN_USER_CREATED notification (Rule-based)")
-            elif admin_event_type == 'ADMIN_USER_UPDATED':
-                # self.show_notification("✅ Admin User Updated!", "Admin user updated successfully!")
-                print(f"🔔 Suppressing ADMIN_USER_UPDATED notification (Rule-based)")
-            
-            return  
+            self._handle_admin_user_event(data)
+            return
         # Handle live policy editing status (NEW)
         if event_type == 'POLICY_LIVE_STATUS':
             self._handle_policy_live_status(data)
@@ -1105,13 +1093,6 @@ class TrayApp:
         if event_type == 'DOS_POLICY_CHANGE':
             self._handle_dos_policy_change_event(data)
             return
-        
-        
-        # Handle DoS Policy change events (NEW)
-        if event_type == 'DOS_POLICY_CHANGE':
-            self._handle_dos_policy_change_event(data)
-            return
-        
         
         # Handle network interface creation/edit events (NEW)
         if event_type == 'INTERFACE_CHANGE':

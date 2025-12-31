@@ -9,7 +9,8 @@
     if (mapData) {
         try {
             const vendorMap = JSON.parse(mapData);
-            console.log('🗺️ Vendor field map loaded');
+            window.__VENDOR_MAP__ = vendorMap; // Global fallback for race resilience
+            console.log('🗺️ Vendor field map loaded and globally registered');
 
             // Post to window so ml-unified-collector can receive it
             window.postMessage({

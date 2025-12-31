@@ -104,11 +104,30 @@
   // Set model URL for ML inference before injection
   // (now done via injectInitScript)
 
-  // Inject ONLY ONCE - prevent duplicates
-  if (!window.__MONITORS_INJECTED__) {
-    window.__MONITORS_INJECTED__ = true;
-    injectPasswordMonitor();
+  // ============================================================================================
+  // CLEANUP & RE-INJECTION MANAGEMENT
+  // ============================================================================================
+
+  // Clean up any existing state from a previous injection (fixes "context invalidated" issues)
+  if (window.__MONITORS_INJECTED__) {
+    console.log('♻️ Re-injection detected. Cleaning up old session...');
+    if (typeof window.__STOP_MONITORS__ === 'function') {
+      try { window.__STOP_MONITORS__(); } catch (e) { }
+    }
   }
+  window.__MONITORS_INJECTED__ = true;
+
+  // Global registry for cleanup
+  const cleanupTasks = [];
+  window.__STOP_MONITORS__ = () => {
+    console.log('🧹 Executing cleanup for old monitors...');
+    cleanupTasks.forEach(task => {
+      try { task(); } catch (e) { }
+    });
+    cleanupTasks.length = 0;
+  };
+
+  injectPasswordMonitor();
 
   // ============================================================================================
   // ROBUST LIFECYCLE & CONNECTION MANAGEMENT
@@ -155,7 +174,7 @@
     }, 5000); // Retry every 5s
   }
 
-  // 2. Re-check monitors on visibility/focus regain
+  let lastResetUrl = '';
   function checkMonitors() {
     if (!isConnected) {
       console.log('👀 Focus regained, checking connection...');
@@ -165,8 +184,18 @@
     // Also trigger a DOM scan just in case we missed updates while backgrounded
     scheduledCapture();
 
-    // Reset universal extractor if needed
-    window.postMessage({ type: 'UNIVERSAL_RESET' }, '*');
+    // Reset universal extractor if the URL has changed significantly
+    const currentUrl = window.location.href;
+
+    // We compare full URL but ignore very minor changes or trailing slashes
+    // However, we MUST detect mkey/id changes as they represent new objects in SPAs
+    if (currentUrl !== lastResetUrl) {
+      console.log('🔄 Route/Parameter Change Detected. Sending UNIVERSAL_RESET');
+      try {
+        window.postMessage({ type: 'UNIVERSAL_RESET' }, '*');
+        lastResetUrl = currentUrl;
+      } catch (e) { }
+    }
   }
 
   document.addEventListener('visibilitychange', () => {
@@ -183,15 +212,20 @@
   connectToBackground();
 
   // Send periodic heartbeat to keep port alive and update timestamp
-  setInterval(() => {
+  const heartbeatInterval = setInterval(() => {
     if (isConnected && backgroundPort) {
       try {
         backgroundPort.postMessage({ type: 'HEARTBEAT' });
       } catch (e) {
         isConnected = false;
+        // If context invalidated, stop trying here; re-injection will handle it
+        if (e.message?.includes('Extension context invalidated')) {
+          clearInterval(heartbeatInterval);
+        }
       }
     }
   }, 25000);
+  cleanupTasks.push(() => clearInterval(heartbeatInterval));
 
 
   let captureTimeout = null;
@@ -215,19 +249,20 @@
 
       // Send to background script immediately
       try {
+        if (!chrome.runtime?.id) return; // context invalidated
         chrome.runtime.sendMessage({
           type: 'PASSWORD_EVENT',
           eventType: data.type,
           data: data.data
         }, (response) => {
           if (chrome.runtime.lastError) {
-            // Suppress context invalid errors - the new script instance will handle it
+            // Suppress context invalidation logs as they are expected during updates
             return;
           }
           console.log('✅ Password event sent to background');
         });
       } catch (e) {
-        // Ignore
+        // Silent catch for context invalidation
       }
     }
 
@@ -244,11 +279,13 @@
       console.log('🛡️ Policy event received in content.js:', data.eventType);
 
       try {
-        chrome.runtime.sendMessage({
-          type: 'POLICY_EVENT',
-          eventType: data.eventType,
-          data: data.data
-        });
+        if (chrome.runtime?.id) {
+          chrome.runtime.sendMessage({
+            type: 'POLICY_EVENT',
+            eventType: data.eventType,
+            data: data.data
+          }, () => { if (chrome.runtime.lastError) return; });
+        }
       } catch (e) { }
     }
 
@@ -257,11 +294,13 @@
       console.log('👤 Admin user event received in content.js:', data.eventType);
 
       try {
-        chrome.runtime.sendMessage({
-          type: 'ADMIN_USER_EVENT',
-          eventType: data.eventType,
-          data: data.data
-        });
+        if (chrome.runtime?.id) {
+          chrome.runtime.sendMessage({
+            type: 'ADMIN_USER_EVENT',
+            eventType: data.eventType,
+            data: data.data
+          }, () => { if (chrome.runtime.lastError) return; });
+        }
       } catch (e) { }
     }
 
@@ -359,11 +398,13 @@
       console.log('🤖 ML Unified Sample received in content.js:', data.sampleType);
 
       try {
-        chrome.runtime.sendMessage({
-          type: 'ML_UNIFIED_SAMPLE',
-          sampleType: data.sampleType,
-          data: data.data
-        });
+        if (chrome.runtime?.id) {
+          chrome.runtime.sendMessage({
+            type: 'ML_UNIFIED_SAMPLE',
+            sampleType: data.sampleType,
+            data: data.data
+          }, () => { if (chrome.runtime.lastError) return; });
+        }
       } catch (e) { }
     }
 
@@ -383,14 +424,14 @@
     if (data && data.type === 'ML_PREDICTION_RESULT') {
       console.log('🔮 ML Prediction Result received in content.js');
 
-
-
       try {
-        chrome.runtime.sendMessage({
-          type: 'ML_PREDICTION_RESULT',
-          data: data.data,
-          isStreaming: data.isStreaming
-        });
+        if (chrome.runtime?.id) {
+          chrome.runtime.sendMessage({
+            type: 'ML_PREDICTION_RESULT',
+            data: data.data,
+            isStreaming: data.isStreaming
+          }, () => { if (chrome.runtime.lastError) return; });
+        }
       } catch (e) { }
     }
   });
@@ -427,6 +468,7 @@
     captureTimeout = setTimeout(() => {
       captureMetadata();
     }, 2000);
+    cleanupTasks.push(() => clearTimeout(captureTimeout));
   }
 
   function captureMetadata() {
@@ -731,6 +773,8 @@
       attributes: false,
       characterData: false
     });
+
+    cleanupTasks.push(() => observer.disconnect());
   }
 
   // ============ URL CHANGE MONITORING (for SPAs) ============
@@ -738,17 +782,23 @@
   function monitorUrlChanges() {
     let lastUrl = location.href;
 
-    new MutationObserver(() => {
+    const urlObserver = new MutationObserver(() => {
       const currentUrl = location.href;
       if (currentUrl !== lastUrl) {
         lastUrl = currentUrl;
         console.log('📍 URL Changed:', currentUrl);
+        // CRITICAL FIX: Trigger reset signal for all content scripts on SPA navigation
+        checkMonitors();
         scheduledCapture();
       }
-    }).observe(document, { subtree: true, childList: true });
+    });
+
+    urlObserver.observe(document, { subtree: true, childList: true });
+    cleanupTasks.push(() => urlObserver.disconnect());
 
     // Also monitor popstate for back/forward navigation
     window.addEventListener('popstate', () => {
+      checkMonitors();
       scheduledCapture();
     });
   }

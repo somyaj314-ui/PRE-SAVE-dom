@@ -4882,6 +4882,497 @@
           "op": "set"
         }
       ]
+    },
+      {
+      "metadata": {
+        "timestamp": 1767357561201,
+        "vendor": "fortigate",
+        "object_type": "dos_policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "testdos4",
+          "interface": "port2",
+          "source_address": "",
+          "destination_address": "",
+          "service": "ALL_TCPALL_UDP",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        },
+        "after": {
+          "name": "testdos4",
+          "interface": "port2",
+          "source_address": "FIREWALL_AUTH_PORTAL_ADDRESSfortitest_add",
+          "destination_address": "fortitest_addgmail.comlogin.microsoftonline.com",
+          "service": "ALL_TCPALL_UDP",
+          "log_traffic": false,
+          "action": false,
+          "threshold": 5000,
+          "comments": "",
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "source_address",
+          "old": "",
+          "new": "FIREWALL_AUTH_PORTAL_ADDRESSfortitest_add"
+        },
+        {
+          "field": "destination_address",
+          "old": "",
+          "new": "fortitest_addgmail.comlogin.microsoftonline.com"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1767357587290,
+        "vendor": "fortigate",
+        "object_type": "policy",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "name": "policytesting",
+          "source_interface": "port2  port3 a",
+          "destination_interface": "testipsec2 a",
+          "source_address": "FABRIC_DEVICE  FIREWALL_AUTH_PORTAL_ADDRESS a",
+          "destination_address": "SSLVPN_TUNNEL_ADDR1 a",
+          "schedule": "always a",
+          "service": "TFTP a",
+          "action": "ACCEPT",
+          "log_traffic": "Security events",
+          "log_at_session_start": "",
+          "comments": "0/1023",
+          "status": ""
+        },
+        "after": {
+          "name": "policytesting",
+          "source_interface": "port2  port3 a",
+          "destination_interface": "testipsec2 a",
+          "source_address": "FABRIC_DEVICE  FIREWALL_AUTH_PORTAL_ADDRESS a",
+          "destination_address": "SSLVPN_TUNNEL_ADDR1 a",
+          "schedule": "always a",
+          "service": "TFTP a",
+          "action": "DENY",
+          "comments": "0/1023",
+          "status": ""
+        }
+      },
+      "changes": [
+        {
+          "field": "action",
+          "old": "ACCEPT",
+          "new": "DENY"
+        },
+        {
+          "field": "log_traffic",
+          "old": ""
+        },
+        {
+          "field": "log_traffic",
+          "old": "Security events"
+        },
+        {
+          "field": "log_at_session_start",
+          "old": ""
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1767357602146,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "port2                             port3                             testipsec3",
+          "destination_interface": "port1                             testipsec3",
+          "source_address": "FABRIC_DEVICEgmail.comlogin.microsoft.com",
+          "destination_address": "gmail.comlogin.microsoftonline.com",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 132,
+          "nat_port": false,
+          "status": true
+        },
+        "after": {
+          "source_interface": "port2                             port3                             testipsec3",
+          "destination_interface": "port1                             testipsec3",
+          "source_address": "FABRIC_DEVICEgmail.comlogin.microsoft.com",
+          "destination_address": "gmail.comlogin.microsoftonline.com",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 132,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "nat_port",
+          "old": false
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1767357625522,
+        "vendor": "fortigate",
+        "object_type": "vpn_ipsec_tunnel",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "tunnel_name": "testipsec4",
+          "tunnel_type": "string:dynamic",
+          "remote_gateway": "0.0.0.0",
+          "interface": "port1",
+          "nat_traversal": "enable",
+          "certificate": "Fortinet_SSL_DSA2048Fortinet_SSL_ECDSA384Fortinet_SSL_RSA2048",
+          "auth_mode": false,
+          "peer_id": "",
+          "ike_enc_algo": "string:des",
+          "ike_auth_algo": "string:md5",
+          "dh_group": false,
+          "auth_user": "",
+          "phase2_name": "",
+          "replay": false,
+          "pfs": false,
+          "phase2_protocol": "",
+          "keylife_seconds": ""
+        },
+        "after": {
+          "tunnel_name": "testipsec4",
+          "tunnel_type": "string:dynamic",
+          "remote_gateway": "0.0.0.0",
+          "interface": "port1",
+          "nat_traversal": "enable",
+          "certificate": "Fortinet_SSL_DSA2048Fortinet_SSL_ECDSA384Fortinet_SSL_RSA2048",
+          "auth_mode": false,
+          "peer_id": "",
+          "ike_enc_algo": "string:des",
+          "ike_auth_algo": "string:md5",
+          "dh_group": false,
+          "auth_user": "",
+          "phase2_name": "",
+          "replay": false,
+          "pfs": false,
+          "phase2_protocol": "",
+          "keylife_seconds": ""
+        }
+      },
+      "changes": []
+    },
+    {
+      "metadata": {
+        "timestamp": 1767357679444,
+        "vendor": "fortigate",
+        "object_type": "vpn_ipsec_tunnel",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "tunnel_name": "testipsecnew",
+          "tunnel_type": "string:static",
+          "remote_gateway": "0.0.0.0",
+          "interface": "",
+          "nat_traversal": "enable",
+          "certificate": "",
+          "auth_mode": false,
+          "ike_enc_algo": "?",
+          "ike_auth_algo": "?",
+          "dh_group": false,
+          "auth_user": "",
+          "phase2_name": "testipsecnew",
+          "replay": true,
+          "pfs": true,
+          "phase2_protocol": 0,
+          "keylife_seconds": 43200
+        },
+        "after": {
+          "tunnel_name": "testipsecnew",
+          "tunnel_type": "string:static",
+          "interface": "port2",
+          "nat_traversal": false,
+          "certificate": "",
+          "auth_mode": false,
+          "ike_enc_algo": "string:des",
+          "ike_auth_algo": "?",
+          "dh_group": false,
+          "auth_user": "",
+          "phase2_name": "testipsecnew",
+          "replay": true,
+          "pfs": true,
+          "phase2_protocol": 0,
+          "keylife_seconds": 43200
+        }
+      },
+      "changes": [
+        {
+          "field": "remote_gateway",
+          "old": "0.0.0.0"
+        },
+        {
+          "field": "interface",
+          "old": "",
+          "new": "port2"
+        },
+        {
+          "field": "nat_traversal",
+          "old": "enable",
+          "new": false
+        },
+        {
+          "field": "ike_enc_algo",
+          "old": "?",
+          "new": "string:des"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1767357733292,
+        "vendor": "fortigate",
+        "object_type": "admin_user",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "username": "sneha",
+          "admin_type": "local",
+          "comments": "cxdfxdf",
+          "access_profile": "prof_admin",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": true,
+          "guest_auth": false
+        },
+        "after": {
+          "username": "sneha",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "super_admin",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": true,
+          "guest_auth": false
+        }
+      },
+      "changes": [
+        {
+          "field": "comments",
+          "old": "cxdfxdf",
+          "new": ""
+        },
+        {
+          "field": "access_profile",
+          "old": "prof_admin",
+          "new": "super_admin"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1767357763477,
+        "vendor": "fortigate",
+        "object_type": "admin_user",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "username": "rakesh",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "",
+          "force_password_change": false,
+          "trusted_host": false,
+          "guest_auth": false
+        },
+        "after": {
+          "username": "rakesh",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "super_admin",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        }
+      },
+      "changes": [
+        {
+          "field": "access_profile",
+          "old": "",
+          "new": "super_admin"
+        },
+        {
+          "field": "two_factor",
+          "new": false
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1767357803934,
+        "vendor": "fortigate",
+        "object_type": "admin_user",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "username": "somya",
+          "admin_type": "local",
+          "comments": "",
+          "access_profile": "super_admin_readonly",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": false,
+          "guest_auth": false
+        },
+        "after": {
+          "username": "somya",
+          "admin_type": false,
+          "comments": "",
+          "access_profile": "prof_admin",
+          "force_password_change": false,
+          "two_factor": false,
+          "trusted_host": true,
+          "guest_auth": false
+        }
+      },
+      "changes": [
+        {
+          "field": "admin_type",
+          "old": "local",
+          "new": false
+        },
+        {
+          "field": "access_profile",
+          "old": "super_admin_readonly",
+          "new": "prof_admin"
+        },
+        {
+          "field": "trusted_host",
+          "old": false,
+          "new": true
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1767358026154,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "EDIT",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "port2                             port3",
+          "destination_interface": "port2                             port3",
+          "source_address": "FABRIC_DEVICEFIREWALL_AUTH_PORTAL_ADDRESSfortitest_add",
+          "destination_address": "FIREWALL_AUTH_PORTAL_ADDRESSfortitest_add",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 132,
+          "nat_port": false,
+          "status": true
+        },
+        "after": {
+          "source_interface": "port2                             port3",
+          "destination_interface": "port2                             port3",
+          "source_address": "FABRIC_DEVICEFIREWALL_AUTH_PORTAL_ADDRESSfortitest_add",
+          "destination_address": "FIREWALL_AUTH_PORTAL_ADDRESSfortitest_add",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 17,
+          "nat_port": false,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "service",
+          "old": 132,
+          "new": 17
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "timestamp": 1767358064938,
+        "vendor": "fortigate",
+        "object_type": "central_snat",
+        "operation": "CREATE",
+        "data_source": "universal_extractor"
+      },
+      "data": {
+        "before": {
+          "source_interface": "",
+          "destination_interface": "",
+          "source_address": "",
+          "destination_address": "",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        },
+        "after": {
+          "source_interface": "port1                             port2",
+          "destination_interface": "testipsec3                             testipsec4",
+          "source_address": "fortitest_addgmail.com",
+          "destination_address": "fortitest_addgmail.com",
+          "action": true,
+          "snat_type": "nat",
+          "translated_source": "Use Outgoing Interface Address",
+          "service": 0,
+          "nat_port": false,
+          "status": true
+        }
+      },
+      "changes": [
+        {
+          "field": "source_interface",
+          "old": "",
+          "new": "port1                             port2"
+        },
+        {
+          "field": "destination_interface",
+          "old": "",
+          "new": "testipsec3                             testipsec4"
+        },
+        {
+          "field": "source_address",
+          "old": "",
+          "new": "fortitest_addgmail.com"
+        },
+        {
+          "field": "destination_address",
+          "old": "",
+          "new": "fortitest_addgmail.com"
+        }
+      ]
     }
   ]
 }
